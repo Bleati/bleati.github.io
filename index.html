@@ -51,7 +51,7 @@ body {
   transform: scale(1.05);
 }
 
-/* SITE WRAPPER */
+/* SITE */
 #site {
   opacity: 0;
   pointer-events: none;
@@ -107,7 +107,7 @@ body {
   transform: translateX(5px);
 }
 
-/* MAIN AREA */
+/* MAIN */
 .main {
   margin-left: 240px;
   padding: 40px;
@@ -124,25 +124,23 @@ body {
   display: block;
 }
 
-/* STANDARD PAPER */
-.paper {
+/* UNIFIED CARD SIZE */
+.paper,
+.paper.big {
   background: #f5f1e6;
   color: #111;
   padding: 20px;
   margin-bottom: 25px;
   box-shadow: 0 0 25px rgba(255,0,0,0.15);
   transform: rotate(-1deg);
+  max-width: 700px;
+  line-height: 1.8;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .paper:hover {
   transform: scale(1.03);
   box-shadow: 0 12px 40px rgba(0,0,0,0.35);
-}
-
-.paper.big {
-  max-width: 800px;
-  line-height: 1.8;
 }
 
 /* LINKS */
@@ -158,27 +156,28 @@ body {
   color: #ff1a1a;
 }
 
-/* ===== ABOUT NOTEBOOK (UPDATED) ===== */
-.notebook {
+/* ===================== */
+/* ABOUT FIXED NOTEBOOK  */
+/* ===================== */
+.notebook-fixed {
   position: fixed;
   top: 0;
   left: 220px;
   width: calc(100% - 220px);
   height: 100%;
   background: rgba(245, 241, 230, 0.88);
-  overflow-y: auto;
-  z-index: 1;
   backdrop-filter: blur(2px);
+  z-index: 1;
+  overflow: hidden;
 }
 
-/* SMALLER + CLEANER */
 .notebook-content {
   max-width: 700px;
   margin: 70px auto;
   padding: 35px;
   color: #111;
-  line-height: 1.8;
   font-size: 15px;
+  line-height: 1.8;
 
   background-image:
     repeating-linear-gradient(
@@ -270,7 +269,7 @@ canvas {
 </div>
 
 <div id="aboutPage" class="page">
-  <div class="notebook">
+  <div class="notebook-fixed">
     <div class="notebook-content">
       <h2>about</h2>
       <p>write your bio here</p>
@@ -279,18 +278,20 @@ canvas {
 </div>
 
 <div id="fursonaPage" class="page">
-  <div class="paper big">
+  <div class="paper">
     <h2>fursona</h2>
     <p>describe your character</p>
   </div>
 </div>
 
 <div id="linksPage" class="page">
-  <div class="paper big">
+  <div class="paper">
     <h2>links</h2>
+
     <p><a href="#"><i class="fa-brands fa-steam"></i> steam</a></p>
     <p><a href="#"><i class="fa-brands fa-github"></i> github</a></p>
     <p><a href="#"><i class="fa-brands fa-discord"></i> discord</a></p>
+
   </div>
 </div>
 
@@ -316,6 +317,14 @@ function showPage(e,id){
   document.querySelectorAll(".menu a").forEach(a=>a.classList.remove("active"));
   e.target.classList.add("active");
 }
+
+/* CLOCK */
+function updateClock(){
+  document.getElementById("clock").textContent =
+    new Date().toLocaleTimeString();
+}
+setInterval(updateClock,1000);
+updateClock();
 
 /* SYMBOLS */
 function startSymbols(){
@@ -350,14 +359,6 @@ function startSymbols(){
 
   draw();
 }
-
-/* CLOCK */
-function updateClock(){
-  document.getElementById("clock").textContent =
-    new Date().toLocaleTimeString();
-}
-setInterval(updateClock,1000);
-updateClock();
 </script>
 
 </body>
