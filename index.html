@@ -1,315 +1,282 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>bleati</title>
+    <meta charset="UTF-8">
+    <title>bleati</title>
 
-<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Special+Elite&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Special+Elite&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<style>
-body {
-  margin: 0;
-  background: #030303;
-  color: #eee;
-  font-family: 'Special Elite', monospace;
-  overflow: hidden;
-}
+    <style>
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020202; }
+        ::-webkit-scrollbar-thumb { background: #500; border-radius: 10px; }
 
-/* ENTER */
-#enterScreen {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  transition: opacity 0.6s ease;
-}
+        body {
+            margin: 0;
+            background: #030303;
+            color: #eee;
+            font-family: 'Special Elite', monospace;
+            overflow-x: hidden;
+        }
 
-#enterScreen.hide {
-  opacity: 0;
-  pointer-events: none;
-}
+        /* ENTER SCREEN */
+        #enterScreen {
+            position: fixed;
+            inset: 0;
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 1s ease;
+        }
 
-#enterBtn {
-  background: transparent;
-  color: #ff1a1a;
-  border: 1px solid #ff1a1a;
-  padding: 18px 40px;
-  font-size: 20px;
-  letter-spacing: 2px;
-  cursor: pointer;
-  transition: 0.25s ease;
-}
+        #enterScreen.hide { opacity: 0; pointer-events: none; }
 
-#enterBtn:hover {
-  background: #ff1a1a;
-  color: black;
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255,0,0,0.5);
-}
+        #enterBtn {
+            background: transparent;
+            color: #ff1a1a;
+            border: 1px solid #ff1a1a;
+            padding: 20px 50px;
+            font-size: 24px;
+            font-family: 'UnifrakturCook', cursive;
+            letter-spacing: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-/* SITE */
-#site {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 1s ease;
-}
+        #enterBtn:hover {
+            background: #ff1a1a;
+            color: black;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+        }
 
-#site.show {
-  opacity: 1;
-  pointer-events: auto;
-}
+        /* SITE STRUCTURE */
+        #site { opacity: 0; transition: opacity 1.5s ease; }
+        #site.show { opacity: 1; }
 
-/* CLOCK */
-#clock {
-  position: fixed;
-  top: 15px;
-  right: 20px;
-  color: #ff1a1a;
-  font-size: 15px;
-  z-index: 3;
-}
+        #clock {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            color: #ff1a1a;
+            font-size: 22px;
+            z-index: 10;
+            text-shadow: 0 0 8px rgba(255,0,0,0.4);
+        }
 
-/* SIDEBAR */
-.sidebar {
-  position: fixed;
-  width: 220px;
-  height: 100%;
-  background: #080808;
-  border-right: 1px solid #200;
-  padding: 20px;
-  z-index: 2;
-}
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            width: 240px;
+            height: 100vh;
+            background: #080808;
+            border-right: 1px solid #200;
+            padding: 40px 25px;
+            z-index: 5;
+            box-shadow: 10px 0 50px rgba(0,0,0,0.5);
+        }
 
-.logo {
-  font-family: 'UnifrakturCook', cursive;
-  color: #ff1a1a;
-  font-size: 42px;
-}
+        .logo {
+            font-family: 'UnifrakturCook', cursive;
+            color: #ff1a1a;
+            font-size: 48px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
 
-/* SPACED TABS */
-.menu a {
-  display: block;
-  color: #aaa;
-  text-decoration: none;
-  margin: 22px 0;
-  letter-spacing: 1px;
-  transition: 0.2s;
-}
+        .menu a {
+            display: block;
+            color: #666;
+            text-decoration: none;
+            margin: 30px 0;
+            font-size: 19px;
+            letter-spacing: 2px;
+            transition: 0.3s ease;
+        }
 
-.menu a:hover,
-.menu a.active {
-  color: #ff1a1a;
-  transform: translateX(5px);
-}
+        .menu a:hover, .menu a.active {
+            color: #ff1a1a;
+            transform: translateX(10px);
+        }
 
-/* MAIN */
-.main {
-  margin-left: 240px;
-  padding: 40px;
-}
+        /* MAIN CONTENT */
+        .main {
+            margin-left: 300px;
+            padding: 60px;
+            position: relative;
+            z-index: 2;
+        }
 
-/* PAGES */
-.page {
-  display: none;
-}
+        .page { display: none; max-width: 750px; }
+        .page.active { display: block; animation: fadeUp 0.6s ease forwards; }
 
-.page.active {
-  display: block;
-}
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-/* UNIFIED CARD SYSTEM */
-.paper {
-  background: #f5f1e6;
-  color: #111;
-  padding: 20px;
-  margin-bottom: 25px;
-  max-width: 700px;
-  line-height: 1.8;
-  box-shadow: 0 0 25px rgba(255,0,0,0.15);
-  transform: rotate(-1deg);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
+        /* PAPER CARDS */
+        .paper {
+            background: #f0ede4;
+            color: #111;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 15px 15px 40px rgba(0,0,0,0.8);
+            border-left: 4px solid #900;
+            transform: rotate(-0.5deg);
+        }
 
-.paper:hover {
-  transform: scale(1.03);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
-}
+        .paper h2 { 
+            font-family: 'UnifrakturCook', cursive; 
+            font-size: 36px; 
+            margin-top: 0; 
+            color: #b30000; 
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
 
-/* NOTEBOOK STYLE (ABOUT ONLY) */
-.notebook {
-  background: rgba(245, 241, 230, 0.92);
-  background-image:
-    repeating-linear-gradient(
-      to bottom,
-      transparent 0px,
-      transparent 27px,
-      rgba(0,0,0,0.08) 28px
-    );
-}
+        .notebook {
+            background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 31px, #d8d4c7 32px);
+            line-height: 32px;
+        }
 
-/* LINKS */
-.paper a {
-  color: #222;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
+        /* PERMANENT FX */
+        .fog-layer {
+            position: fixed;
+            inset: -50%;
+            background: radial-gradient(circle, rgba(60,0,0,0.1) 0%, transparent 75%);
+            animation: moveFog 40s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
 
-.paper a i {
-  color: #ff1a1a;
-}
+        @keyframes moveFog {
+            0% { transform: translate(0,0); }
+            50% { transform: translate(60px, -40px); }
+            100% { transform: translate(0,0); }
+        }
 
-/* FOG */
-.fog {
-  position: fixed;
-  width: 220%;
-  height: 220%;
-  top: -60%;
-  left: -60%;
-  background: radial-gradient(circle, rgba(90,0,0,0.08), rgba(0,0,0,0.96) 75%);
-  animation: fogMove 40s linear infinite;
-  z-index: 0;
-}
-
-.fog2 {
-  animation-direction: reverse;
-  opacity: 0.3;
-  animation-duration: 60s;
-}
-
-@keyframes fogMove {
-  0% { transform: translate(0,0); }
-  50% { transform: translate(80px,-60px); }
-  100% { transform: translate(0,0); }
-}
-
-/* SYMBOLS */
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-</style>
+        canvas#symbols {
+            position: fixed;
+            top: 0; left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- ENTER -->
 <div id="enterScreen">
-  <button id="enterBtn">ENTER</button>
+    <button id="enterBtn">ENTER</button>
 </div>
 
-<!-- SITE -->
 <div id="site">
+    <div id="clock"></div>
+    <div class="fog-layer"></div>
+    <canvas id="symbols"></canvas>
 
-<div id="clock"></div>
+    <div class="sidebar">
+        <div class="logo">bleati</div>
+        <div class="menu">
+            <a href="#" onclick="showPage(event,'homePage')" class="active">home</a>
+            <a href="#" onclick="showPage(event,'aboutPage')">about</a>
+            <a href="#" onclick="showPage(event,'fursonaPage')">fursona</a>
+        </div>
+    </div>
 
-<div class="fog"></div>
-<div class="fog fog2"></div>
+    <div class="main">
+        <div id="homePage" class="page active">
+            <div class="paper">
+                <h2>BAAAH!!!</h2>
+                <p>Welcome to the digital grazing grounds. This site is a dedicated space for my code, my fursona, and the general chaos of my life.</p>
+                <p>Feel free to explore the tabs on the left. Watch out for the sharp edges.</p>
+            </div>
+        </div>
 
-<canvas id="bg"></canvas>
+        <div id="aboutPage" class="page">
+            <div class="paper notebook">
+                <h2>Bio</h2>
+                <p><strong>Programming:</strong> C#, C++, Java, and SQL. I like building things that work and breaking things that don't.</p>
+                <p><strong>Identity:</strong> AMAB Femboy & Shetland Sheep Furry.</p>
+                <p><strong>Life:</strong> Play guitar, 3D model, and competitive tennis. You'll usually find me in CS2 or hanging out in VRChat.</p>
+            </div>
+        </div>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-  <div class="logo">bleati</div>
-  <div class="menu">
-    <a href="#" onclick="showPage(event,'homePage')" class="active">home</a>
-    <a href="#" onclick="showPage(event,'aboutPage')">about</a>
-    <a href="#" onclick="showPage(event,'fursonaPage')">fursona</a>
-    <a href="#" onclick="showPage(event,'linksPage')">links</a>
-  </div>
-</div>
-
-<!-- MAIN -->
-<div class="main">
-
-<div id="homePage" class="page active">
-  <div class="paper">
-    <h2>BAAAH!!! Welcome to my website pardner :3</h2>
-    <p>This is just a website about me and stuff / links. Enjoy your stay!</p>
-  </div>
-</div>
-
-<div id="aboutPage" class="page">
-  <div class="paper notebook">
-    <h2>Bio or about me (You dont care do ya?)</h2>
-    <p>I like to code (C# C++, Java & SQL), model, play guitar and game. I dont really like physical stuff besides tennis and other racket sports, im a AMAB femboy and im a sheep furry. A SHETLAND SHEEP hahahaha, anyway i like to play cs2 and vrchat along with other games.</p>
-  </div>
-</div>
-
-<div id="fursonaPage" class="page">
-  <div class="paper">
-    <h2>=The sheepster</h2>
-    <p>he's not here right now.. YET!!! ill add more when i get commissions!</p>
-  </div>
+        <div id="fursonaPage" class="page">
+            <div class="paper">
+                <h2>The Sheepster</h2>
+                <p>Nothing but static and wool for now... check back once the commissions are processed!</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-const enterBtn=document.getElementById("enterBtn");
-const enterScreen=document.getElementById("enterScreen");
-const site=document.getElementById("site");
+    const enterBtn = document.getElementById("enterBtn");
+    const enterScreen = document.getElementById("enterScreen");
+    const site = document.getElementById("site");
 
-enterBtn.onclick=()=>{
-  enterScreen.classList.add("hide");
-  site.classList.add("show");
-  setTimeout(()=>enterScreen.style.display="none",600);
-  startSymbols();
-};
+    enterBtn.onclick = () => {
+        enterScreen.classList.add("hide");
+        site.classList.add("show");
+        startSymbols();
+    };
 
-function showPage(e,id){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
+    function showPage(e, id) {
+        e.preventDefault();
+        document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+        document.querySelectorAll(".menu a").forEach(a => a.classList.remove("active"));
+        e.currentTarget.classList.add("active");
+    }
 
-  document.querySelectorAll(".menu a").forEach(a=>a.classList.remove("active"));
-  e.target.classList.add("active");
-}
+    /* CLOCK */
+    setInterval(() => {
+        document.getElementById("clock").textContent = new Date().toLocaleTimeString();
+    }, 1000);
 
-/* CLOCK */
-setInterval(()=>{
-  document.getElementById("clock").textContent =
-    new Date().toLocaleTimeString();
-},1000);
+    /* ETERNAL SYMBOLS */
+    function startSymbols() {
+        const canvas = document.getElementById("symbols");
+        const ctx = canvas.getContext("2d");
 
-/* SYMBOLS */
-function startSymbols(){
-  const canvas=document.getElementById("bg");
-  const ctx=canvas.getContext("2d");
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
 
-  canvas.width=innerWidth;
-  canvas.height=innerHeight;
+        const chars = ["✝", "✦", "☾", "⛧"];
+        const particles = Array.from({ length: 60 }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            speed: Math.random() * 0.4 + 0.1,
+            size: Math.random() * 15 + 10,
+            char: chars[Math.floor(Math.random() * chars.length)],
+            flicker: Math.random() * 0.05
+        }));
 
-  let symbols=["✝","✦","☾","⛧"];
-
-  let particles=Array.from({length:40},()=>({
-    x:Math.random()*canvas.width,
-    y:Math.random()*canvas.height,
-    speed:Math.random()*0.4+0.15,
-    symbol:symbols[Math.floor(Math.random()*symbols.length)]
-  }));
-
-  function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle="rgba(255,0,0,0.65)";
-    ctx.font="20px serif";
-
-    particles.forEach(p=>{
-      ctx.fillText(p.symbol,p.x,p.y);
-      p.y+=p.speed;
-      if(p.y>canvas.height)p.y=0;
-    });
-
-    requestAnimationFrame(draw);
-  }
-
-  draw();
-}
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                // Subtle flicker effect using your speed as a base
+                const opacity = 0.15 + Math.abs(Math.sin(Date.now() * 0.001 * p.speed)) * 0.3;
+                ctx.fillStyle = `rgba(255, 26, 26, ${opacity})`;
+                ctx.font = `${p.size}px serif`;
+                ctx.fillText(p.char, p.x, p.y);
+                
+                p.y += p.speed;
+                if (p.y > canvas.height) p.y = -20;
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    }
 </script>
 
 </body>
