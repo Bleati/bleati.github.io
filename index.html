@@ -2,29 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>bleati</title>
+    <title>bleati 🍓</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-        /* GLOBAL STYLE - DEFAULT FONTS */
+        /* GLOBAL STYLE */
         body {
             margin: 0;
-            background: #030303;
-            color: #eee;
+            background: #0f0a0b; /* Deep dark cherry base */
+            color: #ffeef2;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             overflow-x: hidden;
         }
 
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #020202; }
-        ::-webkit-scrollbar-thumb { background: #500; border-radius: 10px; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1012; }
+        ::-webkit-scrollbar-thumb { background: #ff8fa3; border-radius: 10px; }
 
         /* ENTER SCREEN */
         #enterScreen {
             position: fixed;
             inset: 0;
-            background: black;
+            background: #0a0506;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 1000;
@@ -35,21 +36,22 @@
 
         #enterBtn {
             background: transparent;
-            color: #ff1a1a;
-            border: 1px solid #ff1a1a;
+            color: #ff8fa3;
+            border: 2px solid #ff8fa3;
             padding: 15px 40px;
             font-size: 20px;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 4px;
+            border-radius: 50px;
             cursor: pointer;
             transition: 0.3s;
+            letter-spacing: 2px;
         }
 
         #enterBtn:hover {
-            background: #ff1a1a;
-            color: black;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+            background: #ff8fa3;
+            color: #fff;
+            box-shadow: 0 0 30px rgba(255, 143, 163, 0.5);
+            transform: scale(1.1);
         }
 
         /* SITE STRUCTURE */
@@ -60,10 +62,13 @@
             position: fixed;
             top: 20px;
             right: 30px;
-            color: #ff1a1a;
+            color: #ffb3c1;
             font-size: 18px;
             font-weight: bold;
             z-index: 10;
+            background: rgba(0,0,0,0.3);
+            padding: 5px 15px;
+            border-radius: 20px;
         }
 
         /* SIDEBAR */
@@ -71,58 +76,61 @@
             position: fixed;
             width: 240px;
             height: 100vh;
-            background: #080808;
-            border-right: 1px solid #200;
+            background: #1a1012;
+            border-right: 3px solid #ff8fa3;
             padding: 40px 25px;
             z-index: 5;
-            box-shadow: 10px 0 50px rgba(0,0,0,0.5);
-            box-sizing: border-box; /* Crucial for padding */
+            box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
         }
 
         .logo {
-            color: #ff1a1a;
+            color: #ff8fa3;
             font-size: 38px;
             font-weight: 900;
-            margin-bottom: 20px; /* Reduced to fit portrait */
+            margin-bottom: 20px;
             text-align: center;
             letter-spacing: -1px;
+            text-shadow: 0 0 10px rgba(255,143,163,0.4);
         }
 
         .menu a {
             display: block;
-            color: #666;
+            color: #8a7075;
             text-decoration: none;
-            margin: 25px 0;
-            font-size: 16px;
+            margin: 20px 0;
+            font-size: 17px;
             font-weight: bold;
-            text-transform: lowercase;
-            letter-spacing: 1px;
             transition: 0.3s ease;
+            text-align: center;
+            background: rgba(255,143,163,0.05);
+            padding: 10px;
+            border-radius: 15px;
         }
 
         .menu a:hover, .menu a.active {
-            color: #ff1a1a;
-            transform: translateX(10px);
+            color: #fff;
+            background: #ff8fa3;
+            transform: scale(1.05);
         }
 
-        /* Portrait Container (Sidebar) */
+        /* Portrait Container */
         .oc-portrait-sidebar {
-            width: 150px;
-            height: 150px;
-            border: 2px solid #300;
-            margin: 0 auto 30px auto; /* Centers the portrait */
-            background: #050505;
-            box-shadow: inset 0 0 20px rgba(0,0,0,1);
+            width: 140px;
+            height: 140px;
+            border: 3px solid #ff8fa3;
+            margin: 0 auto 20px auto;
+            background: #000;
             position: relative;
             overflow: hidden;
-            border-radius: 4px;
+            border-radius: 50%; /* Round for extra cuteness */
         }
 
         /* MAIN CONTENT */
         .main {
-            margin-left: 240px; /* Matched to sidebar width */
+            margin-left: 240px;
             padding: 60px;
             position: relative;
             z-index: 2;
@@ -136,80 +144,64 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* PAPER CARDS */
+        /* PAPER CARDS - CUTE EDITION */
         .paper {
-            background: #f0ede4;
-            color: #111;
+            background: #fffcf2;
+            color: #4a3a3d;
             padding: 40px;
             margin-bottom: 40px;
-            box-shadow: 15px 15px 40px rgba(0,0,0,0.8);
-            border-left: 5px solid #900;
+            box-shadow: 10px 10px 0px #ff8fa3;
+            border-radius: 25px;
+            position: relative;
         }
 
         .paper h2 { 
             font-size: 28px; 
             margin-top: 0; 
-            color: #b30000; 
-            border-bottom: 2px solid #ccc;
+            color: #ff4d6d; 
+            border-bottom: 2px dashed #ffccd5;
             padding-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .notebook {
-            background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 31px, #d8d4c7 32px);
+            background-image: radial-gradient(#ffccd5 2px, transparent 2px);
+            background-size: 25px 25px;
             line-height: 32px;
         }
 
-        /* --- THEMED OC PANELS --- */
-
-        /* Panel Common Styles */
+        /* IMAGE PANELS */
         .oc-panel {
-            background: #000;
-            border: 2px solid #400; /* Darker weathered red */
-            box-shadow: inset 0 0 15px rgba(0,0,0,1), 0 0 10px rgba(255,0,0,0.1);
+            background: #1a1012;
+            border: 3px solid #ffb3c1;
+            box-shadow: 0 0 20px rgba(255,143,163,0.2);
             overflow: hidden;
             position: relative;
             margin-bottom: 30px;
+            border-radius: 20px;
         }
 
-        /* Adds a subtle 'scanning' grid overlay over placeholder only */
-        .oc-panel img[src="placeholder.jpg"] {
-            opacity: 0.15;
-            filter: grayscale(1) sepia(1) hue-rotate(-50deg) saturate(3);
-        }
-
-        /* Actual Image display setup */
         .oc-panel img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Crops image to fill container without distortion */
+            object-fit: cover;
             display: block;
         }
 
-        /* 1. Large Showcase (Home Page) */
-        .oc-showcase-large {
-            width: 100%;
-            height: 400px; /* Adjust height as needed for full body shot */
-        }
+        .oc-showcase-large { width: 100%; height: 400px; }
 
-        /* 2. Gallery Grid (Fursona Page) */
         .oc-gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
             margin-top: 20px;
         }
+        .gallery-item { height: 200px; }
 
-        .gallery-item {
-            height: 200px; /* Square slots */
-        }
-
-        /* --- PERMANENT FX --- */
+        /* PERMANENT FX - PINK FOG */
         .fog-layer {
             position: fixed;
             inset: -50%;
-            background: radial-gradient(circle, rgba(60,0,0,0.1) 0%, transparent 75%);
+            background: radial-gradient(circle, rgba(255,143,163,0.15) 0%, transparent 70%);
             animation: moveFog 40s linear infinite;
             z-index: 0;
             pointer-events: none;
@@ -217,7 +209,7 @@
 
         @keyframes moveFog {
             0% { transform: translate(0,0); }
-            50% { transform: translate(60px, -40px); }
+            50% { transform: translate(40px, -40px); }
             100% { transform: translate(0,0); }
         }
 
@@ -227,13 +219,26 @@
             z-index: 1;
             pointer-events: none;
         }
+
+        /* STRAWBERRY DECORATIONS */
+        .strawberry-icon {
+            position: absolute;
+            font-size: 24px;
+            top: -15px;
+            right: 20px;
+        }
     </style>
 </head>
 
 <body>
 
+<audio id="bgMusic" loop>
+    <source src="your-audio-file.mp3" type="audio/mpeg">
+</audio>
+
 <div id="enterScreen">
-    <button id="enterBtn">ENTER</button>
+    <div style="font-size: 50px; margin-bottom: 20px;">🍓</div>
+    <button id="enterBtn">ENTER THE GARDEN</button>
 </div>
 
 <div id="site">
@@ -242,10 +247,10 @@
     <canvas id="symbols"></canvas>
 
     <div class="sidebar">
-        <div class="logo">bleati</div>
+        <div class="logo">bleati 🍓</div>
         
         <div class="oc-portrait-sidebar oc-panel">
-            <img src="placeholder.jpg" alt="[Portrait Slot]">
+            <img src="placeholder.jpg" alt="Portrait">
         </div>
 
         <div class="menu">
@@ -257,43 +262,38 @@
 
     <div class="main">
         <div id="homePage" class="page active">
-            
             <div class="oc-showcase-large oc-panel">
-                <img src="placeholder.jpg" alt="[Large Showcase Slot]">
+                <img src="placeholder.jpg" alt="Home Showcase">
             </div>
 
             <div class="paper">
-                <h2>Welcome</h2>
-                <p>This is my personal archive. Feel free to browse through the tabs to learn more about my work, my art, and my current projects.</p>
+                <span class="strawberry-icon">🍓</span>
+                <h2>Hiii~!</h2>
+                <p>Welcome to my sweet little corner of the web! I'm a coding sheep who loves strawberries and soft vibes. Enjoy your stay! :3</p>
             </div>
         </div>
 
         <div id="aboutPage" class="page">
             <div class="paper notebook">
-                <h2>Bio</h2>
-                <p><strong>Dev:</strong> C#, C++, Java, SQL.</p>
-                <p><strong>Identity:</strong> AMAB Femboy & Shetland Sheep Furry.</p>
-                <p><strong>Interests:</strong> Guitar, 3D modeling, Tennis, CS2, and VRChat.</p>
+                <span class="strawberry-icon">🍓</span>
+                <h2>About Me</h2>
+                <p><strong>Code:</strong> C#, C++, Java, SQL (I promise my code is cute too!)</p>
+                <p><strong>Me:</strong> AMAB Femboy & Shetland Sheep Furry.</p>
+                <p><strong>Fun:</strong> Guitar, Tennis, CS2, and VRChat hanging.</p>
             </div>
         </div>
 
         <div id="fursonaPage" class="page">
             <div class="paper">
-                <h2>The Fursona</h2>
-                <p>Currently rendering... Check the visual database below for current visual status.</p>
+                <span class="strawberry-icon">🍓</span>
+                <h2>The Sheepie</h2>
+                <p>Art coming soon! I'm so excited to show off my fluffy self!</p>
 
                 <div class="oc-gallery-grid">
-                    <div class="gallery-item oc-panel">
-                        <img src="placeholder.jpg" alt="[Gallery Slot 1]">
-                    </div>
-                    <div class="gallery-item oc-panel">
-                        <img src="placeholder.jpg" alt="[Gallery Slot 2]">
-                    </div>
-                    <div class="gallery-item oc-panel">
-                        <img src="placeholder.jpg" alt="[Gallery Slot 3]">
-                    </div>
+                    <div class="gallery-item oc-panel"><img src="placeholder.jpg"></div>
+                    <div class="gallery-item oc-panel"><img src="placeholder.jpg"></div>
+                    <div class="gallery-item oc-panel"><img src="placeholder.jpg"></div>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -303,8 +303,10 @@
     const enterBtn = document.getElementById("enterBtn");
     const enterScreen = document.getElementById("enterScreen");
     const site = document.getElementById("site");
+    const music = document.getElementById("bgMusic");
 
     enterBtn.onclick = () => {
+        music.play().catch(e => console.log("Music blocked"));
         enterScreen.classList.add("hide");
         site.classList.add("show");
         startSymbols();
@@ -318,12 +320,11 @@
         e.currentTarget.classList.add("active");
     }
 
-    /* CLOCK */
     setInterval(() => {
         document.getElementById("clock").textContent = new Date().toLocaleTimeString();
     }, 1000);
 
-    /* ETERNAL SYMBOLS - YOUR EXACT LOGIC */
+    /* ETERNAL SYMBOLS - KEEPING YOUR EXACT LOGIC */
     function startSymbols() {
         const canvas = document.getElementById("symbols");
         const ctx = canvas.getContext("2d");
@@ -348,8 +349,9 @@
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => {
-                const opacity = 0.15 + Math.abs(Math.sin(Date.now() * 0.001 * p.speed)) * 0.3;
-                ctx.fillStyle = `rgba(255, 26, 26, ${opacity})`;
+                // Symbols are now a soft strawberry pink
+                const opacity = 0.2 + Math.abs(Math.sin(Date.now() * 0.001 * p.speed)) * 0.3;
+                ctx.fillStyle = `rgba(255, 143, 163, ${opacity})`;
                 ctx.font = `${p.size}px serif`;
                 ctx.fillText(p.char, p.x, p.y);
                 
