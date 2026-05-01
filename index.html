@@ -4,29 +4,18 @@
 <title>bleati</title>
 
 <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 body {
   margin: 0;
-  background: #050505;
+  background: #030303;
   color: #eee;
   font-family: 'Special Elite', monospace;
   overflow: hidden;
 }
 
-/* UPDATED */
-#site {
-  display: block;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 1s ease;
-}
-
-#site.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
+/* ENTER */
 #enterScreen {
   position: fixed;
   width: 100%;
@@ -62,12 +51,25 @@ body {
   transform: scale(1.05);
 }
 
+/* SITE */
+#site {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease;
+}
+
+#site.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* SIDEBAR */
 .sidebar {
   position: fixed;
   width: 220px;
   height: 100%;
-  background: #0a0a0a;
-  border-right: 1px solid #300;
+  background: #080808;
+  border-right: 1px solid #200;
   padding: 20px;
   z-index: 2;
 }
@@ -80,7 +82,7 @@ body {
 
 .menu a {
   display: block;
-  color: #bbb;
+  color: #aaa;
   text-decoration: none;
   margin: 12px 0;
   transition: 0.2s;
@@ -91,6 +93,7 @@ body {
   transform: translateX(5px);
 }
 
+/* MAIN */
 .main {
   margin-left: 240px;
   padding: 40px;
@@ -98,38 +101,79 @@ body {
   z-index: 2;
 }
 
+/* PAGES */
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+/* PAPER */
 .paper {
   background: #f5f1e6;
   color: #111;
   padding: 20px;
   margin-bottom: 25px;
-  box-shadow: 0 0 20px rgba(255,0,0,0.2);
+  box-shadow: 0 0 25px rgba(255,0,0,0.15);
   transform: rotate(-1deg);
 }
 
+.paper.big {
+  max-width: 800px;
+  line-height: 1.6;
+}
+
+/* LINKS */
+.paper a {
+  color: #222;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.2s;
+}
+
+.paper a i {
+  color: #ff1a1a;
+  transition: 0.2s;
+}
+
+.paper a:hover {
+  color: #ff1a1a;
+}
+
+.paper a:hover i {
+  transform: translateX(3px);
+  text-shadow: 0 0 8px rgba(255,0,0,0.5);
+}
+
+/* FOG */
 .fog {
   position: fixed;
-  width: 200%;
-  height: 200%;
-  top: -50%;
-  left: -50%;
-  background: radial-gradient(circle, rgba(80,0,0,0.12), rgba(0,0,0,0.9) 70%);
-  animation: fogMove 25s linear infinite;
+  width: 220%;
+  height: 220%;
+  top: -60%;
+  left: -60%;
+  background: radial-gradient(circle at center, rgba(90,0,0,0.08), rgba(0,0,0,0.96) 75%);
+  animation: fogMove 40s linear infinite;
   z-index: 0;
 }
 
 .fog2 {
   animation-direction: reverse;
-  opacity: 0.4;
-  animation-duration: 35s;
+  opacity: 0.3;
+  animation-duration: 60s;
 }
 
 @keyframes fogMove {
   0% { transform: translate(0,0) scale(1); }
-  50% { transform: translate(60px, -40px) scale(1.1); }
+  50% { transform: translate(80px, -60px) scale(1.15); }
   100% { transform: translate(0,0) scale(1); }
 }
 
+/* SYMBOLS */
 canvas {
   position: fixed;
   top: 0;
@@ -156,17 +200,44 @@ canvas {
   <div class="sidebar">
     <div class="logo">bleati</div>
     <div class="menu">
-      <a href="index.html">home</a>
-      <a href="about.html">about</a>
-      <a href="gallery.html">gallery</a>
+      <a href="#" onclick="showPage('homePage')">home</a>
+      <a href="#" onclick="showPage('aboutPage')">about</a>
+      <a href="#" onclick="showPage('linksPage')">links</a>
     </div>
   </div>
 
   <div class="main">
-    <div class="paper">
-      <h2>test</h2>
-      <p>test</p>
+
+    <div id="homePage" class="page active">
+      <div class="paper">
+        <h2>♡ welcome ♡</h2>
+        <p>lost little lamb wandering the web. stay a while.</p>
+      </div>
     </div>
+
+    <div id="aboutPage" class="page">
+      <div class="paper big">
+        <h2>about me</h2>
+        <p>
+          write your full bio here...
+
+          make it long, expressive, aesthetic.
+        </p>
+      </div>
+    </div>
+
+    <div id="linksPage" class="page">
+      <div class="paper big">
+        <h2>links</h2>
+
+        <p><a href="#"><i class="fa-brands fa-steam"></i> steam</a></p>
+        <p><a href="#"><i class="fa-brands fa-github"></i> github</a></p>
+        <p><a href="#"><i class="fa-brands fa-discord"></i> discord</a></p>
+        <p><a href="#"><i class="fa-solid fa-link"></i> other</a></p>
+
+      </div>
+    </div>
+
   </div>
 
 </div>
@@ -187,6 +258,11 @@ enterBtn.onclick = () => {
   startSymbols();
 };
 
+function showPage(id) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
 function startSymbols() {
   const canvas = document.getElementById("bg");
   const ctx = canvas.getContext("2d");
@@ -199,13 +275,13 @@ function startSymbols() {
   let particles = Array.from({length: 40}, () => ({
     x: Math.random()*canvas.width,
     y: Math.random()*canvas.height,
-    speed: Math.random()*0.5 + 0.2,
+    speed: Math.random()*0.4 + 0.15,
     symbol: symbols[Math.floor(Math.random()*symbols.length)]
   }));
 
   function draw() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle = "rgba(255,0,0,0.7)";
+    ctx.fillStyle = "rgba(255,0,0,0.65)";
     ctx.font = "20px serif";
 
     particles.forEach(p => {
