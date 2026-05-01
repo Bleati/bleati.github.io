@@ -70,8 +70,6 @@ body {
   right: 20px;
   color: #ff1a1a;
   font-size: 12px;
-  letter-spacing: 1px;
-  opacity: 0.8;
   z-index: 3;
 }
 
@@ -103,7 +101,6 @@ body {
 .menu a:hover,
 .menu a.active {
   color: #ff1a1a;
-  text-shadow: 0 0 8px rgba(255,0,0,0.4);
   transform: translateX(5px);
 }
 
@@ -124,7 +121,7 @@ body {
   display: block;
 }
 
-/* PAPER */
+/* PAPER (ALL CARDS) */
 .paper {
   background: #f5f1e6;
   color: #111;
@@ -132,11 +129,17 @@ body {
   margin-bottom: 25px;
   box-shadow: 0 0 25px rgba(255,0,0,0.15);
   transform: rotate(-1deg);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.paper:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
 }
 
 .paper.big {
   max-width: 800px;
-  line-height: 1.6;
+  line-height: 1.8;
 }
 
 /* LINKS */
@@ -157,7 +160,7 @@ body {
   color: #ff1a1a;
 }
 
-/* NOTES LOG */
+/* NOTES */
 .notes {
   max-width: 700px;
   height: 80vh;
@@ -170,16 +173,47 @@ body {
   padding: 12px;
   margin-bottom: 12px;
   color: #ccc;
+  transition: 0.25s ease;
 }
 
 .note:hover {
+  transform: scale(1.02);
   border-left: 2px solid #ff1a1a;
 }
 
-.date {
-  display: block;
-  color: #ff1a1a;
-  font-size: 11px;
+/* NOTEBOOK ABOUT PAGE */
+.notebook {
+  position: fixed;
+  top: 0;
+  left: 220px;
+  width: calc(100% - 220px);
+  height: 100%;
+  background: #f5f1e6;
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.notebook-content {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 40px;
+  color: #111;
+  line-height: 1.8;
+  font-size: 15px;
+
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 28px,
+      rgba(0,0,0,0.08) 29px
+    );
+
+  transition: transform 0.25s ease;
+}
+
+.notebook-content:hover {
+  transform: scale(1.03);
 }
 
 /* FOG */
@@ -245,6 +279,7 @@ canvas {
 
 <div class="main">
 
+<!-- HOME -->
 <div id="homePage" class="page active">
   <div class="paper">
     <h2>♡ welcome ♡</h2>
@@ -252,13 +287,17 @@ canvas {
   </div>
 </div>
 
+<!-- ABOUT -->
 <div id="aboutPage" class="page">
-  <div class="paper big">
-    <h2>about</h2>
-    <p>write your bio here</p>
+  <div class="notebook">
+    <div class="notebook-content">
+      <h2>about</h2>
+      <p>write your bio here</p>
+    </div>
   </div>
 </div>
 
+<!-- FURSONA -->
 <div id="fursonaPage" class="page">
   <div class="paper big">
     <h2>fursona</h2>
@@ -266,19 +305,23 @@ canvas {
   </div>
 </div>
 
+<!-- LINKS -->
 <div id="linksPage" class="page">
   <div class="paper big">
     <h2>links</h2>
+
     <p><a href="#"><i class="fa-brands fa-steam"></i> steam</a></p>
     <p><a href="#"><i class="fa-brands fa-github"></i> github</a></p>
     <p><a href="#"><i class="fa-brands fa-discord"></i> discord</a></p>
+
   </div>
 </div>
 
+<!-- EXTRA (NOTES) -->
 <div id="extraPage" class="page">
   <div class="notes">
     <div class="note">
-      <span class="date">--:--:--</span>
+      <p class="date">--:--:--</p>
       <p>the site is watching.</p>
     </div>
   </div>
@@ -288,17 +331,18 @@ canvas {
 </div>
 
 <script>
-const enterBtn = document.getElementById("enterBtn");
-const enterScreen = document.getElementById("enterScreen");
-const site = document.getElementById("site");
+const enterBtn=document.getElementById("enterBtn");
+const enterScreen=document.getElementById("enterScreen");
+const site=document.getElementById("site");
 
-enterBtn.onclick = () => {
+enterBtn.onclick=()=>{
   enterScreen.classList.add("hide");
   site.classList.add("show");
   setTimeout(()=>enterScreen.style.display="none",600);
   startSymbols();
 };
 
+/* PAGE SWITCH */
 function showPage(e,id){
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   document.getElementById(id).classList.add("active");
@@ -310,11 +354,10 @@ function showPage(e,id){
 /* CLOCK */
 function updateClock(){
   const now=new Date();
-  const t=now.toLocaleTimeString();
-  document.getElementById("clock").textContent=t;
+  document.getElementById("clock").textContent=now.toLocaleTimeString();
 
-  const noteDate=document.querySelector(".note .date");
-  if(noteDate) noteDate.textContent=t;
+  const note=document.querySelector(".note .date");
+  if(note) note.textContent=now.toLocaleTimeString();
 }
 setInterval(updateClock,1000);
 updateClock();
@@ -323,10 +366,12 @@ updateClock();
 function startSymbols(){
   const canvas=document.getElementById("bg");
   const ctx=canvas.getContext("2d");
+
   canvas.width=innerWidth;
   canvas.height=innerHeight;
 
   let symbols=["✝","✦","☾","⛧"];
+
   let particles=Array.from({length:40},()=>({
     x:Math.random()*canvas.width,
     y:Math.random()*canvas.height,
@@ -338,13 +383,16 @@ function startSymbols(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.fillStyle="rgba(255,0,0,0.65)";
     ctx.font="20px serif";
+
     particles.forEach(p=>{
       ctx.fillText(p.symbol,p.x,p.y);
       p.y+=p.speed;
       if(p.y>canvas.height)p.y=0;
     });
+
     requestAnimationFrame(draw);
   }
+
   draw();
 }
 </script>
