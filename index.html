@@ -6,47 +6,34 @@
 <title>bleati</title>
 
 <style>
-/* ===== BASE ===== */
 body {
   margin: 0;
-  background: #050505;
+  background: black;
   color: white;
   font-family: Arial, sans-serif;
   overflow: hidden;
 }
 
-/* ===== ENTER SCREEN ===== */
 #enterScreen {
   position: fixed;
   width: 100%;
   height: 100%;
   background: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 999;
-}
-
-#enterBtn {
-  padding: 12px 24px;
-  border: 1px solid rgba(255,0,0,0.4);
-  background: transparent;
-  color: white;
   cursor: pointer;
-  transition: 0.25s ease;
 }
 
-#enterBtn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(255,0,0,0.3);
-}
-
-/* ===== MAIN CONTENT ===== */
 #main {
   display: none;
+  opacity: 0;
+  transition: opacity 1s ease;
 }
 
-/* ===== TOP LEFT LOGO ===== */
+#main.show {
+  display: block;
+  opacity: 1;
+}
+
 #bleati {
   position: absolute;
   top: 15px;
@@ -55,24 +42,25 @@ body {
   letter-spacing: 3px;
   cursor: pointer;
   transition: 0.25s ease;
+  z-index: 2;
 }
 
 #bleati:hover {
   transform: translateY(-3px);
-  text-shadow: 0 0 12px rgba(255,0,0,0.5);
+  text-shadow: 0 0 12px rgba(255,0,0,0.6);
   filter: brightness(1.3);
 }
 
-/* ===== CENTER CONTENT ===== */
 .center {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  z-index: 2;
+  position: relative;
 }
 
-/* ===== HOVER ITEMS ===== */
 .hover-item {
   transition: 0.25s ease;
   cursor: pointer;
@@ -80,11 +68,34 @@ body {
 
 .hover-item:hover {
   transform: translateY(-4px) scale(1.03);
-  text-shadow: 0 0 10px rgba(255,0,0,0.35);
+  text-shadow: 0 0 10px rgba(255,0,0,0.4);
   filter: brightness(1.2);
 }
 
-/* ===== HIDDEN YOUTUBE PLAYER ===== */
+/* RED FOG BACKGROUND */
+.fog {
+  position: fixed;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(circle at center, rgba(255,0,0,0.15), transparent 70%);
+  animation: fogMove 20s linear infinite;
+  z-index: 0;
+}
+
+.fog2 {
+  animation-direction: reverse;
+  opacity: 0.6;
+  animation-duration: 30s;
+}
+
+@keyframes fogMove {
+  0% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(50px, -50px) scale(1.1); }
+  100% { transform: translate(0,0) scale(1); }
+}
+
 #music {
   position: absolute;
   width: 0;
@@ -97,13 +108,11 @@ body {
 
 <body>
 
-<!-- ENTER SCREEN -->
-<div id="enterScreen">
-  <button id="enterBtn">ENTER</button>
-</div>
+<div id="enterScreen"></div>
 
-<!-- MAIN CONTENT -->
 <div id="main">
+  <div class="fog"></div>
+  <div class="fog fog2"></div>
 
   <div id="bleati" class="hover-item">BLEATI</div>
 
@@ -111,26 +120,21 @@ body {
     <h1 class="hover-item">welcome</h1>
   </div>
 
-  <!-- MUSIC (YouTube embed) -->
   <iframe
     id="music"
     src="https://www.youtube.com/embed/01ynkBWYkzY?autoplay=1&mute=1"
     allow="autoplay">
   </iframe>
-
 </div>
 
 <script>
 const enterScreen = document.getElementById("enterScreen");
 const main = document.getElementById("main");
-const enterBtn = document.getElementById("enterBtn");
 const music = document.getElementById("music");
 
-enterBtn.onclick = () => {
+enterScreen.onclick = () => {
   enterScreen.style.display = "none";
-  main.style.display = "block";
-
-  // try to unmute after user interaction
+  main.classList.add("show");
   music.src = music.src.replace("mute=1", "mute=0");
 };
 </script>
