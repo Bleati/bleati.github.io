@@ -3,328 +3,168 @@
 <head>
 <title>bleati</title>
 
-<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Special+Elite&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;700&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
-  background: #030303;
-  color: #eee;
-  font-family: 'Special Elite', monospace;
-  overflow: hidden;
+  font-family: 'Comic Neue', cursive;
+  background: #d9c6b0 url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+  overflow-x: hidden;
 }
 
-/* ENTER */
-#enterScreen {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: black;
+/* BOARD */
+.board {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  transition: opacity 0.6s ease;
-}
-
-#enterScreen.hide {
-  opacity: 0;
-  pointer-events: none;
-}
-
-#enterBtn {
-  background: transparent;
-  color: #ff1a1a;
-  border: 1px solid #ff1a1a;
-  padding: 18px 40px;
-  font-size: 20px;
-  letter-spacing: 2px;
-  cursor: pointer;
-  transition: 0.25s ease;
-}
-
-#enterBtn:hover {
-  background: #ff1a1a;
-  color: black;
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255,0,0,0.5);
-}
-
-/* SITE */
-#site {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 1s ease;
-}
-
-#site.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* CLOCK */
-#clock {
-  position: fixed;
-  top: 15px;
-  right: 20px;
-  color: #ff1a1a;
-  font-size: 12px;
-  z-index: 3;
-}
-
-/* SIDEBAR */
-.sidebar {
-  position: fixed;
-  width: 220px;
-  height: 100%;
-  background: #080808;
-  border-right: 1px solid #200;
-  padding: 20px;
-  z-index: 2;
-}
-
-.logo {
-  font-family: 'UnifrakturCook', cursive;
-  color: #ff1a1a;
-  font-size: 42px;
-}
-
-/* SPACED TABS */
-.menu a {
-  display: block;
-  color: #aaa;
-  text-decoration: none;
-  margin: 22px 0;
-  letter-spacing: 1px;
-  transition: 0.2s;
-}
-
-.menu a:hover,
-.menu a.active {
-  color: #ff1a1a;
-  transform: translateX(5px);
-}
-
-/* MAIN */
-.main {
-  margin-left: 240px;
+  flex-wrap: wrap;
+  gap: 30px;
   padding: 40px;
+  justify-content: center;
 }
 
-/* PAGES */
-.page {
-  display: none;
+/* CARDS */
+.card {
+  width: 320px;
+  background: #fffaf3;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  transform: rotate(var(--r));
+  transition: 0.25s ease;
+  position: relative;
 }
 
-.page.active {
-  display: block;
+.card:hover {
+  transform: scale(1.05) rotate(0deg);
 }
 
-/* UNIFIED CARD SYSTEM */
+/* PIN LOOK */
+.card::before {
+  content: "📌";
+  position: absolute;
+  top: -10px;
+  left: 12px;
+  font-size: 18px;
+}
+
+/* TRAINER CARD */
+.trainer {
+  background: #e7f2ff;
+  border: 2px solid #a9d0ff;
+  padding: 16px;
+}
+
+/* TEXT AREA */
 .paper {
-  background: #f5f1e6;
-  color: #111;
-  padding: 20px;
-  margin-bottom: 25px;
-  max-width: 700px;
-  line-height: 1.8;
-  box-shadow: 0 0 25px rgba(255,0,0,0.15);
-  transform: rotate(-1deg);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  padding: 18px;
+  line-height: 1.6;
+  color: #222;
 }
 
-.paper:hover {
-  transform: scale(1.03);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+/* IMAGE */
+img {
+  width: 100%;
+  border-radius: 10px;
 }
 
-/* NOTEBOOK STYLE (ABOUT ONLY) */
-.notebook {
-  background: rgba(245, 241, 230, 0.92);
-  background-image:
-    repeating-linear-gradient(
-      to bottom,
-      transparent 0px,
-      transparent 27px,
-      rgba(0,0,0,0.08) 28px
-    );
+/* TAGS */
+.tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #ffd6ea;
+  font-size: 12px;
+  margin: 3px;
 }
 
 /* LINKS */
-.paper a {
-  color: #222;
+a {
   text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+  color: #444;
 }
 
-.paper a i {
-  color: #ff1a1a;
+a:hover {
+  color: #ff5fa2;
 }
 
-/* FOG */
-.fog {
-  position: fixed;
-  width: 220%;
-  height: 220%;
-  top: -60%;
-  left: -60%;
-  background: radial-gradient(circle, rgba(90,0,0,0.08), rgba(0,0,0,0.96) 75%);
-  animation: fogMove 40s linear infinite;
-  z-index: 0;
+/* MUSIC BLOCK */
+.music {
+  display: grid;
+  gap: 8px;
 }
 
-.fog2 {
-  animation-direction: reverse;
-  opacity: 0.3;
-  animation-duration: 60s;
+.song {
+  background: #f2f2f2;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 13px;
 }
 
-@keyframes fogMove {
-  0% { transform: translate(0,0); }
-  50% { transform: translate(80px,-60px); }
-  100% { transform: translate(0,0); }
-}
-
-/* SYMBOLS */
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 1;
+/* SMALL HEADER STYLE */
+h2, h3 {
+  margin-top: 0;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ENTER -->
-<div id="enterScreen">
-  <button id="enterBtn">ENTER</button>
-</div>
+<div class="board">
 
-<!-- SITE -->
-<div id="site">
+  <!-- TRAINER CARD -->
+  <div class="card trainer" style="--r:-2deg;">
+    <h3>TRAINER CARD</h3>
+    <p><b>Name:</b> bleati</p>
+    <p><b>Style:</b> soft / void / femboy</p>
+    <p><b>Nature:</b> shy + curious</p>
 
-<div id="clock"></div>
-
-<div class="fog"></div>
-<div class="fog fog2"></div>
-
-<canvas id="bg"></canvas>
-
-<!-- SIDEBAR -->
-<div class="sidebar">
-  <div class="logo">bleati</div>
-  <div class="menu">
-    <a href="#" onclick="showPage(event,'homePage')" class="active">home</a>
-    <a href="#" onclick="showPage(event,'aboutPage')">about</a>
-    <a href="#" onclick="showPage(event,'fursonaPage')">fursona</a>
-    <a href="#" onclick="showPage(event,'linksPage')">links</a>
+    <span class="tag">pastel chaos</span>
+    <span class="tag">lamb energy</span>
   </div>
-</div>
 
-<!-- MAIN -->
-<div class="main">
-
-<div id="homePage" class="page active">
-  <div class="paper">
-    <h2>♡ welcome ♡</h2>
-    <p>lost little lamb wandering the web. stay a while.</p>
+  <!-- ABOUT -->
+  <div class="card" style="--r:2deg;">
+    <div class="paper">
+      <h3>about me</h3>
+      <p>
+        write your bio here. this is your main identity space.
+        make it soft, personal, aesthetic, etc.
+      </p>
+    </div>
   </div>
-</div>
 
-<div id="aboutPage" class="page">
-  <div class="paper notebook">
-    <h2>about</h2>
-    <p>write your bio here</p>
+  <!-- IMAGE / FURSONA -->
+  <div class="card" style="--r:-3deg;">
+    <img src="https://placekitten.com/400/400">
+    <div class="paper">
+      <p>fursona / character space</p>
+    </div>
   </div>
-</div>
 
-<div id="fursonaPage" class="page">
-  <div class="paper">
-    <h2>fursona</h2>
-    <p>describe your character</p>
+  <!-- MUSIC -->
+  <div class="card" style="--r:1deg;">
+    <div class="paper">
+      <h3>my tunes</h3>
+
+      <div class="music">
+        <div class="song">Weezer – Perfect Situation</div>
+        <div class="song">My Chemical Romance – Demolition Lovers</div>
+        <div class="song">Fall Out Boy – 27</div>
+        <div class="song">Graham Kartna – Browser History</div>
+      </div>
+    </div>
   </div>
-</div>
 
-<div id="linksPage" class="page">
-  <div class="paper">
-    <h2>links</h2>
-
-    <p><a href="#"><i class="fa-brands fa-steam"></i> steam</a></p>
-    <p><a href="#"><i class="fa-brands fa-github"></i> github</a></p>
-    <p><a href="#"><i class="fa-brands fa-discord"></i> discord</a></p>
-
+  <!-- LINKS -->
+  <div class="card" style="--r:-1deg;">
+    <div class="paper">
+      <h3>links</h3>
+      <p><a href="#">discord</a></p>
+      <p><a href="#">steam</a></p>
+      <p><a href="#">github</a></p>
+    </div>
   </div>
-</div>
 
 </div>
-</div>
-
-<script>
-const enterBtn=document.getElementById("enterBtn");
-const enterScreen=document.getElementById("enterScreen");
-const site=document.getElementById("site");
-
-enterBtn.onclick=()=>{
-  enterScreen.classList.add("hide");
-  site.classList.add("show");
-  setTimeout(()=>enterScreen.style.display="none",600);
-  startSymbols();
-};
-
-function showPage(e,id){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-
-  document.querySelectorAll(".menu a").forEach(a=>a.classList.remove("active"));
-  e.target.classList.add("active");
-}
-
-/* CLOCK */
-setInterval(()=>{
-  document.getElementById("clock").textContent =
-    new Date().toLocaleTimeString();
-},1000);
-
-/* SYMBOLS */
-function startSymbols(){
-  const canvas=document.getElementById("bg");
-  const ctx=canvas.getContext("2d");
-
-  canvas.width=innerWidth;
-  canvas.height=innerHeight;
-
-  let symbols=["✝","✦","☾","⛧"];
-
-  let particles=Array.from({length:40},()=>({
-    x:Math.random()*canvas.width,
-    y:Math.random()*canvas.height,
-    speed:Math.random()*0.4+0.15,
-    symbol:symbols[Math.floor(Math.random()*symbols.length)]
-  }));
-
-  function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle="rgba(255,0,0,0.65)";
-    ctx.font="20px serif";
-
-    particles.forEach(p=>{
-      ctx.fillText(p.symbol,p.x,p.y);
-      p.y+=p.speed;
-      if(p.y>canvas.height)p.y=0;
-    });
-
-    requestAnimationFrame(draw);
-  }
-
-  draw();
-}
-</script>
 
 </body>
 </html>
