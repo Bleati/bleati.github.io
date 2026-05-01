@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>bleati</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Special+Elite&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      background: #050505;
+      color: #eee;
+      font-family: 'Special Elite', monospace;
+      overflow-x: hidden;
+    }
+
+    .sidebar {
+      position: fixed;
+      width: 220px;
+      height: 100%;
+      background: #0a0a0a;
+      border-right: 1px solid #300;
+      padding: 20px;
+    }
+
+    .logo {
+      font-family: 'UnifrakturCook', cursive;
+      color: #ff1a1a;
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .menu a {
+      display: block;
+      color: #bbb;
+      text-decoration: none;
+      margin: 12px 0;
+      transition: 0.3s;
+    }
+
+    .menu a:hover {
+      color: #ff2e2e;
+      transform: translateX(5px);
+    }
+
+    .main {
+      margin-left: 240px;
+      padding: 40px;
+    }
+
+    .paper {
+      background: #f5f1e6;
+      color: #111;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 0 20px rgba(255,0,0,0.2);
+      transform: rotate(-1deg);
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    #enterBtn {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: black;
+      color: red;
+      border: 1px solid red;
+      padding: 20px;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 10;
+    }
+  </style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<!-- 🔊 ENTER BUTTON -->
+<button id="enterBtn">enter</button>
+
+<!-- 🎵 YOUTUBE MUSIC -->
+<iframe id="ytplayer"
+width="0" height="0"
+src="https://www.youtube.com/embed/01ynkBWYkzY?autoplay=1&loop=1&playlist=01ynkBWYkzY&controls=0&enablejsapi=1&mute=1"
+frameborder="0"
+allow="autoplay">
+</iframe>
+
+<div class="sidebar">
+  <div class="logo">bleati</div>
+  <div class="menu">
+    <a href="index.html">home</a>
+    <a href="about.html">about</a>
+    <a href="gallery.html">gallery</a>
+  </div>
+</div>
+
+<div class="main">
+  <div class="paper">
+    <h2>♡ welcome ♡</h2>
+    <p>lost little lamb wandering the web. stay a while.</p>
+  </div>
+
+  <div class="paper">
+    <h2>notes</h2>
+    <p>dark thoughts, soft heart.</p>
+  </div>
+</div>
+
+<script>
+// 🎵 UNMUTE ON CLICK
+document.getElementById("enterBtn").onclick = function() {
+  let player = document.getElementById("ytplayer").contentWindow;
+
+  player.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+  player.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+
+  this.style.display = "none";
+};
+
+// ✨ FLOATING SYMBOLS
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let symbols = ["✝","✦","☾","⛧"];
+
+let particles = Array.from({length: 40}, () => ({
+  x: Math.random()*canvas.width,
+  y: Math.random()*canvas.height,
+  speed: Math.random()*0.5 + 0.2,
+  symbol: symbols[Math.floor(Math.random()*symbols.length)]
+}));
+
+function draw() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "rgba(255,0,0,0.7)";
+  ctx.font = "20px serif";
+
+  particles.forEach(p => {
+    ctx.fillText(p.symbol, p.x, p.y);
+    p.y += p.speed;
+    if(p.y > canvas.height) p.y = 0;
+  });
+
+  requestAnimationFrame(draw);
+}
+
+draw();
+</script>
+
+</body>
+</html>
