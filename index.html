@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>bleati 🍓✨</title>
+    <title>bleati | ovis archive 🍓🐑</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
@@ -13,7 +13,6 @@
             color: #ffeef2;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             overflow-x: hidden;
-            overflow-y: overlay;
         }
 
         ::-webkit-scrollbar { width: 10px; }
@@ -24,66 +23,58 @@
         #enterScreen {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle, #1a1012 0%, #0a0506 100%);
+            background: #0a0506;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 1s ease;
         }
 
-        #enterScreen.hide { opacity: 0; transform: scale(1.2); pointer-events: none; }
+        #enterScreen.hide { opacity: 0; transform: translateY(-100%); pointer-events: none; }
 
-        .pulse-strawberry {
-            font-size: 60px;
-            animation: pulse 2s infinite;
+        .lamb-icon {
+            font-size: 80px;
             margin-bottom: 20px;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); filter: drop-shadow(0 0 0px #ff8fa3); }
-            50% { transform: scale(1.1); filter: drop-shadow(0 0 20px #ff8fa3); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 0px #ff8fa3); }
+            filter: drop-shadow(0 0 15px #ff8fa3);
         }
 
         #enterBtn {
-            background: #ff8fa3;
-            color: #fff;
+            background: #ffb3c1;
+            color: #4a3a3d;
             border: none;
-            padding: 18px 50px;
-            font-size: 22px;
+            padding: 15px 50px;
+            font-size: 20px;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            transition: 0.4s;
-            box-shadow: 0 10px 20px rgba(255, 143, 163, 0.3);
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        #enterBtn:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(255, 143, 163, 0.5); }
+        #enterBtn:hover { background: #ff8fa3; color: white; transform: scale(1.05); }
 
         /* SITE STRUCTURE */
         #site { opacity: 0; transition: opacity 1.5s ease; }
         #site.show { opacity: 1; }
 
-        /* CLOCK & STATUS */
+        /* CLOCK */
         #topNav {
             position: fixed;
             top: 20px;
             right: 30px;
-            display: flex;
-            gap: 15px;
             z-index: 10;
         }
 
-        .status-pill {
+        .clock-pill {
             background: rgba(255, 143, 163, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 143, 163, 0.3);
+            backdrop-filter: blur(8px);
+            border: 2px solid #ff8fa3;
             color: #ffb3c1;
-            padding: 8px 18px;
+            padding: 8px 20px;
             border-radius: 30px;
-            font-size: 14px;
             font-weight: bold;
         }
 
@@ -93,161 +84,152 @@
             width: 280px;
             height: 100vh;
             background: #160d0f;
-            border-right: 1px solid rgba(255, 143, 163, 0.2);
+            border-right: 4px solid #ff8fa3;
             padding: 40px 20px;
             z-index: 5;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.5);
         }
 
         .logo {
             color: #ff8fa3;
-            font-size: 42px;
+            font-size: 45px;
             font-weight: 900;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: center;
             letter-spacing: -2px;
         }
 
-        /* Portrait Container */
         .oc-portrait-sidebar {
-            width: 160px;
-            height: 160px;
-            border: 4px solid #ff8fa3;
+            width: 170px;
+            height: 170px;
+            border: 5px solid #ff8fa3;
             margin: 0 auto 30px auto;
             background: #000;
+            border-radius: 50% 50% 40% 40%; /* Slightly more head-shaped */
             overflow: hidden;
-            border-radius: 40px; /* Squircle shape */
-            transform: rotate(-3deg);
-            transition: 0.5s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
-
-        .oc-portrait-sidebar:hover { transform: rotate(0deg) scale(1.05); }
 
         .menu a {
             display: flex;
             align-items: center;
             color: #a38b90;
             text-decoration: none;
-            margin: 12px 0;
-            font-size: 16px;
+            margin: 10px 0;
+            font-size: 17px;
             font-weight: bold;
+            padding: 12px 20px;
+            border-radius: 15px;
             transition: 0.3s;
-            padding: 14px 20px;
-            border-radius: 20px;
-            gap: 15px;
+            gap: 12px;
         }
 
-        .menu a i { font-size: 18px; color: #ff8fa3; opacity: 0.7; }
+        .menu a i { color: #ff8fa3; font-size: 20px; }
 
         .menu a:hover, .menu a.active {
             color: #fff;
-            background: linear-gradient(90deg, #ff8fa3, #ff4d6d);
-            transform: translateX(10px);
-            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
+            background: #ff4d6d;
+            transform: translateX(8px);
         }
-
-        .menu a:hover i { color: #fff; opacity: 1; }
 
         /* MAIN CONTENT */
         .main {
             margin-left: 320px;
-            padding: 60px 40px;
+            padding: 80px 40px;
             position: relative;
             z-index: 2;
         }
 
-        .page { display: none; max-width: 900px; }
-        .page.active { display: block; animation: slideIn 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards; }
+        .page { display: none; max-width: 850px; }
+        .page.active { display: block; animation: bleatIn 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28); }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(30px); }
-            to { opacity: 1; transform: translateX(0); }
+        @keyframes bleatIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        /* DYNAMIC BOXES */
+        /* CONTENT BOXES */
         .paper {
             background: #fffcf2;
             color: #4a3a3d;
-            padding: 40px;
-            margin-bottom: 35px;
-            box-shadow: 8px 8px 0px #ffb3c1;
-            border-radius: 30px;
+            padding: 45px;
+            margin-bottom: 40px;
+            box-shadow: 12px 12px 0px #ffb3c1;
+            border-radius: 40px;
             position: relative;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.4s;
             border: 2px solid transparent;
+            /* Subtile Wool Pattern */
+            background-image: radial-gradient(#ffccd5 1.5px, transparent 1.5px);
+            background-size: 30px 30px;
         }
 
         .paper:hover {
-            transform: scale(1.03) translateY(-5px);
-            box-shadow: 15px 15px 0px #ff8fa3;
-            border-color: #ffccd5;
+            transform: translateY(-10px);
+            box-shadow: 18px 18px 0px #ff8fa3;
+            border-color: #ff8fa3;
         }
 
         .paper h2 { 
-            font-size: 32px; 
+            font-size: 34px; 
             margin-top: 0; 
             color: #ff4d6d; 
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
         }
 
         /* IMAGE PANELS */
         .oc-panel {
             background: #1a1012;
-            border: 4px solid #ffb3c1;
+            border: 5px solid #ffb3c1;
             overflow: hidden;
-            position: relative;
             margin-bottom: 30px;
-            border-radius: 35px;
-            transition: 0.5s ease;
+            border-radius: 40px;
+            transition: 0.4s;
         }
 
         .oc-panel:hover { border-color: #ff8fa3; transform: scale(1.02); }
+        .oc-panel img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.9; }
 
-        .oc-panel img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.8; transition: 0.5s; }
-        .oc-panel:hover img { opacity: 1; }
+        .oc-showcase-large { width: 100%; height: 480px; }
 
-        .oc-showcase-large { width: 100%; height: 450px; }
-
-        /* GALLERY GRID */
         .oc-gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 25px;
             margin-top: 25px;
         }
-        .gallery-item { height: 250px; }
+        .gallery-item { height: 240px; }
 
         /* PERMANENT FX */
         .fog-layer {
             position: fixed;
             inset: -50%;
-            background: radial-gradient(circle, rgba(255,143,163,0.12) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,143,163,0.1) 0%, transparent 70%);
             animation: moveFog 40s linear infinite;
             z-index: 0;
             pointer-events: none;
         }
 
         @keyframes moveFog {
-            0% { transform: translate(0,0) rotate(0deg); }
-            100% { transform: translate(40px, -40px) rotate(5deg); }
+            0% { transform: translate(0,0); }
+            100% { transform: translate(50px, -50px); }
         }
 
         canvas#symbols { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; }
 
-        .strawberry-badge {
+        /* HORN DECORATION */
+        .horn-icon {
             position: absolute;
-            top: -20px;
-            right: 20px;
-            background: #ff4d6d;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: bold;
+            top: -30px;
+            left: 20px;
+            font-size: 50px;
+            color: #ffb3c1;
+            opacity: 0.5;
+            z-index: -1;
         }
     </style>
 </head>
@@ -259,31 +241,30 @@
 </audio>
 
 <div id="enterScreen">
-    <div class="pulse-strawberry">🍓</div>
-    <button id="enterBtn">OPEN THE GATE</button>
+    <div class="lamb-icon">🐏</div>
+    <button id="enterBtn">Enter the Flock</button>
 </div>
 
 <div id="site">
     <div id="topNav">
-        <div class="status-pill"><i class="fa-solid fa-clock"></i> <span id="clock"></span></div>
-        <div class="status-pill"><i class="fa-solid fa-wifi"></i> Online</div>
+        <div class="clock-pill"><i class="fa-solid fa-moon"></i> <span id="clock"></span></div>
     </div>
 
     <div class="fog-layer"></div>
     <canvas id="symbols"></canvas>
 
     <div class="sidebar">
-        <div class="logo">bleati ✨</div>
+        <div class="logo">bleati 🍓</div>
         
         <div class="oc-portrait-sidebar oc-panel">
             <img src="placeholder.jpg" alt="Portrait">
         </div>
 
         <div class="menu">
-            <a href="#" onclick="showPage(event,'homePage')" class="active"><i class="fa-solid fa-house"></i> Home</a>
-            <a href="#" onclick="showPage(event,'aboutPage')"><i class="fa-solid fa-user-tag"></i> About Me</a>
-            <a href="#" onclick="showPage(event,'fursonaPage')"><i class="fa-solid fa-paw"></i> Fursona</a>
-            <a href="#" onclick="showPage(event,'codingPage')"><i class="fa-solid fa-code"></i> Coding</a>
+            <a href="#" onclick="showPage(event,'homePage')" class="active"><i class="fa-solid fa-clover"></i> Home</a>
+            <a href="#" onclick="showPage(event,'aboutPage')"><i class="fa-solid fa-address-card"></i> About Ovis</a>
+            <a href="#" onclick="showPage(event,'fursonaPage')"><i class="fa-solid fa-cloud"></i> The Sheepie</a>
+            <a href="#" onclick="showPage(event,'codingPage')"><i class="fa-solid fa-scroll"></i> Coding</a>
             <a href="#" onclick="showPage(event,'gamingPage')"><i class="fa-solid fa-gamepad"></i> Gaming</a>
         </div>
     </div>
@@ -294,25 +275,25 @@
                 <img src="placeholder.jpg" alt="Main Showcase">
             </div>
             <div class="paper">
-                <div class="strawberry-badge">FRESH! 🍓</div>
-                <h2><i class="fa-solid fa-sparkles"></i> Welcome Back!</h2>
-                <p>Hiii~! Welcome to my updated grazing grounds. I've added a few more wings to this archive so you can see my code, my games, and my fluffier side. Enjoy your stay! :3</p>
+                <div class="horn-icon">🐏</div>
+                <h2><i class="fa-solid fa-star"></i> The Grazing Grounds</h2>
+                <p>Welcome to my sanctuary. I'm a Shetland Sheep who happens to spend way too much time in the terminal. Browse the woolly archives to see what I've been up to!</p>
             </div>
         </div>
 
         <div id="aboutPage" class="page">
             <div class="paper">
-                <h2><i class="fa-solid fa-id-card"></i> The Dossier</h2>
-                <p><strong>Identity:</strong> AMAB Femboy & Shetland Sheep Furry.</p>
-                <p><strong>Personality:</strong> Just a silly strawberry-loving coder who spends too much time in IDEs and racket sports.</p>
-                <p><strong>Vibe Check:</strong> Soft but sharp. I like aesthetics that contrast—like dark voids filled with pink sparkles.</p>
+                <h2><i class="fa-solid fa-dna"></i> Caprine Specs</h2>
+                <p><strong>Sub-Species:</strong> Shetland Sheep (Furry).</p>
+                <p><strong>Attributes:</strong> AMAB Femboy, Strawberry enthusiast, Racket sport athlete.</p>
+                <p><strong>Temperament:</strong> Soft vibes, but high-performance logic.</p>
             </div>
         </div>
 
         <div id="fursonaPage" class="page">
             <div class="paper">
-                <h2><i class="fa-solid fa-sheep"></i> The Sheepie</h2>
-                <p>Waiting for my wool to be fully rendered by the art gods! Here's where the visual database will expand.</p>
+                <h2><i class="fa-solid fa-cloud"></i> The Woolly Vessel</h2>
+                <p>The visual manifest of my caprine self. Still being woven by the art flock!</p>
                 <div class="oc-gallery-grid">
                     <div class="gallery-item oc-panel"><img src="placeholder.jpg"></div>
                     <div class="gallery-item oc-panel"><img src="placeholder.jpg"></div>
@@ -322,24 +303,22 @@
 
         <div id="codingPage" class="page">
             <div class="paper">
-                <h2><i class="fa-solid fa-terminal"></i> Tech Stack</h2>
-                <p>I build things with logic and a touch of magic.</p>
-                <ul style="line-height: 2;">
-                    <li><strong>C# / .NET:</strong> High performance logic.</li>
-                    <li><strong>C++:</strong> Getting close to the metal.</li>
-                    <li><strong>Java:</strong> Cross-platform chaos.</li>
-                    <li><strong>SQL:</strong> Making sense of the data void.</li>
+                <h2><i class="fa-solid fa-code"></i> Ovis-Logic</h2>
+                <p>Coding with hooves is hard, but I manage:</p>
+                <ul style="line-height: 2.2;">
+                    <li><strong>C# / C++:</strong> My main tools for building.</li>
+                    <li><strong>Java:</strong> For when the flock needs to be cross-platform.</li>
+                    <li><strong>SQL:</strong> Digging through the data-pasture.</li>
                 </ul>
             </div>
         </div>
 
         <div id="gamingPage" class="page">
             <div class="paper">
-                <h2><i class="fa-solid fa-headset"></i> Virtual Worlds</h2>
-                <p>When I'm not coding, I'm usually lost in these realms:</p>
-                <p><strong>CS2:</strong> High stakes and fast reflexes.</p>
-                <p><strong>VRChat:</strong> Socializing as my fluffy self.</p>
-                <p><strong>Sports:</strong> Tennis and anything with a racket—physical activity is the only thing that keeps the sheep healthy!</p>
+                <h2><i class="fa-solid fa-headset"></i> Virtual Pastures</h2>
+                <p><strong>CS2:</strong> For when the sheep has to defend the territory.</p>
+                <p><strong>VRChat:</strong> Socializing in my favorite woolly avatars.</p>
+                <p><strong>Tennis:</strong> The only sport fast enough for a energetic lamb.</p>
             </div>
         </div>
     </div>
@@ -366,13 +345,11 @@
         e.currentTarget.classList.add("active");
     }
 
-    /* CLOCK */
     setInterval(() => {
-        const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        document.getElementById("clock").textContent = timeStr;
+        document.getElementById("clock").textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }, 1000);
 
-    /* ETERNAL SYMBOLS - YOUR EXACT LOGIC */
+    /* ETERNAL SYMBOLS - KEEPING YOUR LOGIC */
     function startSymbols() {
         const canvas = document.getElementById("symbols");
         const ctx = canvas.getContext("2d");
