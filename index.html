@@ -15,7 +15,7 @@ body {
   overflow: hidden;
 }
 
-/* ENTER */
+/* ENTER SCREEN */
 #enterScreen {
   position: fixed;
   width: 100%;
@@ -51,7 +51,7 @@ body {
   transform: scale(1.05);
 }
 
-/* SITE */
+/* SITE WRAPPER */
 #site {
   opacity: 0;
   pointer-events: none;
@@ -71,6 +71,7 @@ body {
   color: #ff1a1a;
   font-size: 12px;
   z-index: 3;
+  letter-spacing: 1px;
 }
 
 /* SIDEBAR */
@@ -90,11 +91,13 @@ body {
   font-size: 42px;
 }
 
+/* SPACED TABS */
 .menu a {
   display: block;
   color: #aaa;
   text-decoration: none;
-  margin: 12px 0;
+  margin: 22px 0;
+  letter-spacing: 1px;
   transition: 0.2s;
 }
 
@@ -104,7 +107,7 @@ body {
   transform: translateX(5px);
 }
 
-/* MAIN */
+/* MAIN AREA */
 .main {
   margin-left: 240px;
   padding: 40px;
@@ -121,7 +124,7 @@ body {
   display: block;
 }
 
-/* PAPER (ALL CARDS) */
+/* STANDARD PAPER */
 .paper {
   background: #f5f1e6;
   color: #111;
@@ -149,54 +152,30 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  transition: 0.2s;
 }
 
 .paper a i {
   color: #ff1a1a;
 }
 
-.paper a:hover {
-  color: #ff1a1a;
-}
-
-/* NOTES */
-.notes {
-  max-width: 700px;
-  height: 80vh;
-  overflow-y: auto;
-}
-
-.note {
-  background: rgba(0,0,0,0.6);
-  border-left: 2px solid rgba(255,0,0,0.4);
-  padding: 12px;
-  margin-bottom: 12px;
-  color: #ccc;
-  transition: 0.25s ease;
-}
-
-.note:hover {
-  transform: scale(1.02);
-  border-left: 2px solid #ff1a1a;
-}
-
-/* NOTEBOOK ABOUT PAGE */
+/* ===== ABOUT NOTEBOOK (UPDATED) ===== */
 .notebook {
   position: fixed;
   top: 0;
   left: 220px;
   width: calc(100% - 220px);
   height: 100%;
-  background: #f5f1e6;
+  background: rgba(245, 241, 230, 0.88);
   overflow-y: auto;
   z-index: 1;
+  backdrop-filter: blur(2px);
 }
 
+/* SMALLER + CLEANER */
 .notebook-content {
-  max-width: 800px;
-  margin: 60px auto;
-  padding: 40px;
+  max-width: 700px;
+  margin: 70px auto;
+  padding: 35px;
   color: #111;
   line-height: 1.8;
   font-size: 15px;
@@ -204,16 +183,17 @@ body {
   background-image:
     repeating-linear-gradient(
       to bottom,
-      transparent,
-      transparent 28px,
-      rgba(0,0,0,0.08) 29px
+      transparent 0px,
+      transparent 27px,
+      rgba(0,0,0,0.08) 28px
     );
 
+  border-radius: 6px;
   transition: transform 0.25s ease;
 }
 
 .notebook-content:hover {
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
 /* FOG */
@@ -253,10 +233,12 @@ canvas {
 
 <body>
 
+<!-- ENTER -->
 <div id="enterScreen">
   <button id="enterBtn">ENTER</button>
 </div>
 
+<!-- SITE -->
 <div id="site">
 
 <div id="clock"></div>
@@ -266,6 +248,7 @@ canvas {
 
 <canvas id="bg"></canvas>
 
+<!-- SIDEBAR -->
 <div class="sidebar">
   <div class="logo">bleati</div>
   <div class="menu">
@@ -273,13 +256,12 @@ canvas {
     <a href="#" onclick="showPage(event,'aboutPage')">about</a>
     <a href="#" onclick="showPage(event,'fursonaPage')">fursona</a>
     <a href="#" onclick="showPage(event,'linksPage')">links</a>
-    <a href="#" onclick="showPage(event,'extraPage')">extra</a>
   </div>
 </div>
 
+<!-- MAIN -->
 <div class="main">
 
-<!-- HOME -->
 <div id="homePage" class="page active">
   <div class="paper">
     <h2>♡ welcome ♡</h2>
@@ -287,7 +269,6 @@ canvas {
   </div>
 </div>
 
-<!-- ABOUT -->
 <div id="aboutPage" class="page">
   <div class="notebook">
     <div class="notebook-content">
@@ -297,7 +278,6 @@ canvas {
   </div>
 </div>
 
-<!-- FURSONA -->
 <div id="fursonaPage" class="page">
   <div class="paper big">
     <h2>fursona</h2>
@@ -305,25 +285,12 @@ canvas {
   </div>
 </div>
 
-<!-- LINKS -->
 <div id="linksPage" class="page">
   <div class="paper big">
     <h2>links</h2>
-
     <p><a href="#"><i class="fa-brands fa-steam"></i> steam</a></p>
     <p><a href="#"><i class="fa-brands fa-github"></i> github</a></p>
     <p><a href="#"><i class="fa-brands fa-discord"></i> discord</a></p>
-
-  </div>
-</div>
-
-<!-- EXTRA (NOTES) -->
-<div id="extraPage" class="page">
-  <div class="notes">
-    <div class="note">
-      <p class="date">--:--:--</p>
-      <p>the site is watching.</p>
-    </div>
   </div>
 </div>
 
@@ -342,7 +309,6 @@ enterBtn.onclick=()=>{
   startSymbols();
 };
 
-/* PAGE SWITCH */
 function showPage(e,id){
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   document.getElementById(id).classList.add("active");
@@ -350,17 +316,6 @@ function showPage(e,id){
   document.querySelectorAll(".menu a").forEach(a=>a.classList.remove("active"));
   e.target.classList.add("active");
 }
-
-/* CLOCK */
-function updateClock(){
-  const now=new Date();
-  document.getElementById("clock").textContent=now.toLocaleTimeString();
-
-  const note=document.querySelector(".note .date");
-  if(note) note.textContent=now.toLocaleTimeString();
-}
-setInterval(updateClock,1000);
-updateClock();
 
 /* SYMBOLS */
 function startSymbols(){
@@ -395,6 +350,14 @@ function startSymbols(){
 
   draw();
 }
+
+/* CLOCK */
+function updateClock(){
+  document.getElementById("clock").textContent =
+    new Date().toLocaleTimeString();
+}
+setInterval(updateClock,1000);
+updateClock();
 </script>
 
 </body>
