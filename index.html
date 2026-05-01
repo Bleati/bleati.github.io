@@ -15,9 +15,9 @@
             overflow-x: hidden;
         }
 
-        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #ff8fa3; border: 2px solid #0f0a0b; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #ff8fa3; border-radius: 10px; }
 
         /* ENTER SCREEN */
         #enterScreen {
@@ -60,56 +60,71 @@
         #site { opacity: 0; transition: opacity 1.5s ease; }
         #site.show { opacity: 1; }
 
-        /* CLOCK */
-        #topNav {
-            position: fixed;
-            top: 20px;
-            right: 30px;
-            z-index: 10;
-        }
-
-        .clock-pill {
-            background: rgba(255, 143, 163, 0.15);
-            backdrop-filter: blur(8px);
-            border: 2px solid #ff8fa3;
-            color: #ffb3c1;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: bold;
-        }
-
-        /* SIDEBAR */
+        /* SIDEBAR (LEFT) */
         .sidebar {
             position: fixed;
-            width: 280px;
+            left: 0;
+            width: 260px;
             height: 100vh;
             background: #160d0f;
-            border-right: 4px solid #ff8fa3;
-            padding: 40px 20px;
+            border-right: 3px solid #ff8fa3;
+            padding: 40px 15px;
             z-index: 5;
             display: flex;
             flex-direction: column;
             box-shadow: 10px 0 30px rgba(0,0,0,0.5);
         }
 
+        /* DATA PANEL (RIGHT) - THE NEW RECTANGLE */
+        .data-panel-right {
+            position: fixed;
+            right: 0;
+            width: 220px;
+            height: 100vh;
+            background: linear-gradient(to left, #1a1012, #0f0a0b);
+            border-left: 2px solid rgba(255, 143, 163, 0.3);
+            padding: 30px 20px;
+            z-index: 5;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .data-panel-right h4 {
+            color: #ff8fa3;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 143, 163, 0.2);
+            padding-bottom: 5px;
+        }
+
+        .stat-box {
+            background: rgba(255, 143, 163, 0.05);
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            border: 1px solid rgba(255, 143, 163, 0.1);
+        }
+
         .logo {
             color: #ff8fa3;
-            font-size: 45px;
+            font-size: 40px;
             font-weight: 900;
             margin-bottom: 20px;
             text-align: center;
-            letter-spacing: -2px;
         }
 
         .oc-portrait-sidebar {
-            width: 170px;
-            height: 170px;
-            border: 5px solid #ff8fa3;
+            width: 150px;
+            height: 150px;
+            border: 4px solid #ff8fa3;
             margin: 0 auto 30px auto;
             background: #000;
-            border-radius: 50% 50% 40% 40%; /* Slightly more head-shaped */
+            border-radius: 50% 50% 40% 40%;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
         .menu a {
@@ -117,98 +132,94 @@
             align-items: center;
             color: #a38b90;
             text-decoration: none;
-            margin: 10px 0;
-            font-size: 17px;
+            margin: 8px 0;
+            font-size: 16px;
             font-weight: bold;
-            padding: 12px 20px;
-            border-radius: 15px;
+            padding: 12px 15px;
+            border-radius: 12px;
             transition: 0.3s;
             gap: 12px;
         }
 
-        .menu a i { color: #ff8fa3; font-size: 20px; }
-
         .menu a:hover, .menu a.active {
             color: #fff;
             background: #ff4d6d;
-            transform: translateX(8px);
+            transform: translateX(5px);
         }
 
-        /* MAIN CONTENT */
+        /* MAIN CONTENT - ADJUSTED FOR DOUBLE SIDEBARS */
         .main {
-            margin-left: 320px;
-            padding: 80px 40px;
+            margin-left: 260px;
+            margin-right: 220px;
+            padding: 60px 50px;
             position: relative;
             z-index: 2;
         }
 
-        .page { display: none; max-width: 850px; }
-        .page.active { display: block; animation: bleatIn 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28); }
+        .page { display: none; }
+        .page.active { display: block; animation: bleatIn 0.6s ease; }
 
         @keyframes bleatIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* CONTENT BOXES */
         .paper {
             background: #fffcf2;
             color: #4a3a3d;
-            padding: 45px;
+            padding: 40px;
             margin-bottom: 40px;
-            box-shadow: 12px 12px 0px #ffb3c1;
-            border-radius: 40px;
+            box-shadow: 10px 10px 0px #ffb3c1;
+            border-radius: 35px;
             position: relative;
             transition: 0.4s;
-            border: 2px solid transparent;
-            /* Subtile Wool Pattern */
-            background-image: radial-gradient(#ffccd5 1.5px, transparent 1.5px);
-            background-size: 30px 30px;
+            background-image: radial-gradient(#ffccd5 1px, transparent 1px);
+            background-size: 25px 25px;
+        }
+
+        /* FIXED SHEEP/HORN DECORATION */
+        .paper .horn-decor {
+            position: absolute;
+            top: -25px;
+            left: 20px;
+            font-size: 45px;
+            z-index: 1;
+            pointer-events: none;
+            filter: drop-shadow(2px 2px 0px #0f0a0b);
         }
 
         .paper:hover {
-            transform: translateY(-10px);
-            box-shadow: 18px 18px 0px #ff8fa3;
-            border-color: #ff8fa3;
+            transform: translateY(-5px);
+            box-shadow: 15px 15px 0px #ff8fa3;
         }
 
         .paper h2 { 
-            font-size: 34px; 
-            margin-top: 0; 
+            font-size: 28px; 
+            margin-top: 5px; 
             color: #ff4d6d; 
             display: flex; 
             align-items: center; 
-            gap: 15px; 
+            gap: 12px; 
         }
 
         /* IMAGE PANELS */
         .oc-panel {
             background: #1a1012;
-            border: 5px solid #ffb3c1;
+            border: 4px solid #ffb3c1;
             overflow: hidden;
             margin-bottom: 30px;
-            border-radius: 40px;
-            transition: 0.4s;
+            border-radius: 35px;
         }
-
-        .oc-panel:hover { border-color: #ff8fa3; transform: scale(1.02); }
         .oc-panel img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.9; }
 
-        .oc-showcase-large { width: 100%; height: 480px; }
-
-        .oc-gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 25px;
-            margin-top: 25px;
-        }
-        .gallery-item { height: 240px; }
+        .oc-showcase-large { width: 100%; height: 450px; }
 
         /* PERMANENT FX */
         .fog-layer {
             position: fixed;
             inset: -50%;
-            background: radial-gradient(circle, rgba(255,143,163,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,143,163,0.08) 0%, transparent 70%);
             animation: moveFog 40s linear infinite;
             z-index: 0;
             pointer-events: none;
@@ -220,17 +231,6 @@
         }
 
         canvas#symbols { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; }
-
-        /* HORN DECORATION */
-        .horn-icon {
-            position: absolute;
-            top: -30px;
-            left: 20px;
-            font-size: 50px;
-            color: #ffb3c1;
-            opacity: 0.5;
-            z-index: -1;
-        }
     </style>
 </head>
 
@@ -246,26 +246,36 @@
 </div>
 
 <div id="site">
-    <div id="topNav">
-        <div class="clock-pill"><i class="fa-solid fa-moon"></i> <span id="clock"></span></div>
-    </div>
-
     <div class="fog-layer"></div>
     <canvas id="symbols"></canvas>
 
     <div class="sidebar">
-        <div class="logo">bleati 🍓</div>
-        
+        <div class="logo">bleati ✨</div>
         <div class="oc-portrait-sidebar oc-panel">
             <img src="placeholder.jpg" alt="Portrait">
         </div>
-
         <div class="menu">
             <a href="#" onclick="showPage(event,'homePage')" class="active"><i class="fa-solid fa-clover"></i> Home</a>
-            <a href="#" onclick="showPage(event,'aboutPage')"><i class="fa-solid fa-address-card"></i> About Ovis</a>
-            <a href="#" onclick="showPage(event,'fursonaPage')"><i class="fa-solid fa-cloud"></i> The Sheepie</a>
+            <a href="#" onclick="showPage(event,'aboutPage')"><i class="fa-solid fa-address-card"></i> About</a>
+            <a href="#" onclick="showPage(event,'fursonaPage')"><i class="fa-solid fa-cloud"></i> Fursona</a>
             <a href="#" onclick="showPage(event,'codingPage')"><i class="fa-solid fa-scroll"></i> Coding</a>
             <a href="#" onclick="showPage(event,'gamingPage')"><i class="fa-solid fa-gamepad"></i> Gaming</a>
+        </div>
+    </div>
+
+    <div class="data-panel-right">
+        <h4><i class="fa-solid fa-microchip"></i> System Info</h4>
+        <div class="stat-box">
+            <strong>Clock:</strong> <span id="clock">00:00:00</span>
+        </div>
+        <div class="stat-box">
+            <strong>Status:</strong> Grazing...
+        </div>
+        
+        <h4><i class="fa-solid fa-leaf"></i> Ovis Stats</h4>
+        <div class="stat-box">
+            Species: Shetland Sheep<br>
+            Diet: Strawberries 🍓
         </div>
     </div>
 
@@ -275,50 +285,41 @@
                 <img src="placeholder.jpg" alt="Main Showcase">
             </div>
             <div class="paper">
-                <div class="horn-icon">🐏</div>
-                <h2><i class="fa-solid fa-star"></i> The Grazing Grounds</h2>
-                <p>Welcome to my sanctuary. I'm a Shetland Sheep who happens to spend way too much time in the terminal. Browse the woolly archives to see what I've been up to!</p>
+                <div class="horn-decor">🐏</div>
+                <h2>The Grazing Grounds</h2>
+                <p>Hiii~! Welcome to the ovis archive. This is where I keep all my woolly thoughts and code experiments. Feel free to explore the tabs on the left!</p>
             </div>
         </div>
 
         <div id="aboutPage" class="page">
             <div class="paper">
-                <h2><i class="fa-solid fa-dna"></i> Caprine Specs</h2>
-                <p><strong>Sub-Species:</strong> Shetland Sheep (Furry).</p>
-                <p><strong>Attributes:</strong> AMAB Femboy, Strawberry enthusiast, Racket sport athlete.</p>
-                <p><strong>Temperament:</strong> Soft vibes, but high-performance logic.</p>
+                <div class="horn-decor">🍓</div>
+                <h2>The Dossier</h2>
+                <p>I'm a Shetland Sheep furry and a total tech geek. I love the intersection of soft aesthetics and rigid logic.</p>
             </div>
         </div>
 
         <div id="fursonaPage" class="page">
             <div class="paper">
-                <h2><i class="fa-solid fa-cloud"></i> The Woolly Vessel</h2>
-                <p>The visual manifest of my caprine self. Still being woven by the art flock!</p>
-                <div class="oc-gallery-grid">
-                    <div class="gallery-item oc-panel"><img src="placeholder.jpg"></div>
-                    <div class="gallery-item oc-panel"><img src="placeholder.jpg"></div>
-                </div>
+                <div class="horn-decor">☁️</div>
+                <h2>Ref Sheet</h2>
+                <p>Visual database loading... the wool is currently being rendered!</p>
             </div>
         </div>
 
         <div id="codingPage" class="page">
             <div class="paper">
-                <h2><i class="fa-solid fa-code"></i> Ovis-Logic</h2>
-                <p>Coding with hooves is hard, but I manage:</p>
-                <ul style="line-height: 2.2;">
-                    <li><strong>C# / C++:</strong> My main tools for building.</li>
-                    <li><strong>Java:</strong> For when the flock needs to be cross-platform.</li>
-                    <li><strong>SQL:</strong> Digging through the data-pasture.</li>
-                </ul>
+                <div class="horn-decor">💻</div>
+                <h2>Ovis Logic</h2>
+                <p>C#, C++, and Java are my bread and butter (or clover and hay).</p>
             </div>
         </div>
 
         <div id="gamingPage" class="page">
             <div class="paper">
-                <h2><i class="fa-solid fa-headset"></i> Virtual Pastures</h2>
-                <p><strong>CS2:</strong> For when the sheep has to defend the territory.</p>
-                <p><strong>VRChat:</strong> Socializing in my favorite woolly avatars.</p>
-                <p><strong>Tennis:</strong> The only sport fast enough for a energetic lamb.</p>
+                <div class="horn-decor">🎮</div>
+                <h2>Pastures</h2>
+                <p>Catch me in CS2 or hanging out in VRChat!</p>
             </div>
         </div>
     </div>
@@ -345,15 +346,15 @@
         e.currentTarget.classList.add("active");
     }
 
+    /* CLOCK LOGIC */
     setInterval(() => {
-        document.getElementById("clock").textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        document.getElementById("clock").textContent = new Date().toLocaleTimeString();
     }, 1000);
 
-    /* ETERNAL SYMBOLS - KEEPING YOUR LOGIC */
+    /* ETERNAL SYMBOLS */
     function startSymbols() {
         const canvas = document.getElementById("symbols");
         const ctx = canvas.getContext("2d");
-
         function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -367,8 +368,7 @@
             y: Math.random() * canvas.height,
             speed: Math.random() * 0.4 + 0.1,
             size: Math.random() * 15 + 10,
-            char: chars[Math.floor(Math.random() * chars.length)],
-            flicker: Math.random() * 0.05
+            char: chars[Math.floor(Math.random() * chars.length)]
         }));
 
         function draw() {
@@ -378,7 +378,6 @@
                 ctx.fillStyle = `rgba(255, 143, 163, ${opacity})`;
                 ctx.font = `${p.size}px serif`;
                 ctx.fillText(p.char, p.x, p.y);
-                
                 p.y += p.speed;
                 if (p.y > canvas.height) p.y = -20;
             });
