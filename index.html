@@ -1,163 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>bleati</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>bleati</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+/* ===== BASE ===== */
+body {
+  margin: 0;
+  background: #050505;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
 
-  <style>
-    body {
-      margin: 0;
-      background: #050505;
-      color: #eee;
-      font-family: 'Special Elite', monospace;
-      overflow-x: hidden;
-    }
+/* ===== ENTER SCREEN ===== */
+#enterScreen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
 
-    .sidebar {
-      position: fixed;
-      width: 220px;
-      height: 100%;
-      background: #0a0a0a;
-      border-right: 1px solid #300;
-      padding: 20px;
-    }
+#enterBtn {
+  padding: 12px 24px;
+  border: 1px solid rgba(255,0,0,0.4);
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
 
-    .logo {
-      font-family: 'UnifrakturCook', cursive;
-      color: #ff1a1a;
-      font-size: 42px;
-      margin-bottom: 10px;
-    }
+#enterBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255,0,0,0.3);
+}
 
-    .menu a {
-      display: block;
-      color: #bbb;
-      text-decoration: none;
-      margin: 12px 0;
-      transition: 0.3s;
-    }
+/* ===== MAIN CONTENT ===== */
+#main {
+  display: none;
+}
 
-    .menu a:hover {
-      color: #ff2e2e;
-      transform: translateX(5px);
-    }
+/* ===== TOP LEFT LOGO ===== */
+#bleati {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  font-size: 18px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
 
-    .main {
-      margin-left: 240px;
-      padding: 40px;
-    }
+#bleati:hover {
+  transform: translateY(-3px);
+  text-shadow: 0 0 12px rgba(255,0,0,0.5);
+  filter: brightness(1.3);
+}
 
-    .paper {
-      background: #f5f1e6;
-      color: #111;
-      padding: 20px;
-      margin-bottom: 25px;
-      box-shadow: 0 0 20px rgba(255,0,0,0.2);
-      transform: rotate(-1deg);
-    }
+/* ===== CENTER CONTENT ===== */
+.center {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-    }
+/* ===== HOVER ITEMS ===== */
+.hover-item {
+  transition: 0.25s ease;
+  cursor: pointer;
+}
 
-    #enterBtn {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: black;
-      color: red;
-      border: 1px solid red;
-      padding: 20px;
-      font-size: 20px;
-      cursor: pointer;
-      z-index: 10;
-    }
-  </style>
+.hover-item:hover {
+  transform: translateY(-4px) scale(1.03);
+  text-shadow: 0 0 10px rgba(255,0,0,0.35);
+  filter: brightness(1.2);
+}
+
+/* ===== HIDDEN YOUTUBE PLAYER ===== */
+#music {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+</style>
 </head>
 
 <body>
 
-<canvas id="bg"></canvas>
-
-<!-- 🔊 ENTER BUTTON -->
-<button id="enterBtn">enter</button>
-
-<!-- 🎵 YOUTUBE MUSIC -->
-<iframe id="ytplayer"
-width="0" height="0"
-src="https://www.youtube.com/embed/01ynkBWYkzY?autoplay=1&loop=1&playlist=01ynkBWYkzY&controls=0&enablejsapi=1&mute=1"
-frameborder="0"
-allow="autoplay">
-</iframe>
-
-<div class="sidebar">
-  <div class="logo">bleati</div>
-  <div class="menu">
-    <a href="index.html">home</a>
-    <a href="about.html">about</a>
-    <a href="gallery.html">gallery</a>
-  </div>
+<!-- ENTER SCREEN -->
+<div id="enterScreen">
+  <button id="enterBtn">ENTER</button>
 </div>
 
-<div class="main">
-  <div class="paper">
-    <h2>♡ welcome ♡</h2>
-    <p>lost little lamb wandering the web. stay a while.</p>
+<!-- MAIN CONTENT -->
+<div id="main">
+
+  <div id="bleati" class="hover-item">BLEATI</div>
+
+  <div class="center">
+    <h1 class="hover-item">welcome</h1>
   </div>
 
-  <div class="paper">
-    <h2>notes</h2>
-    <p>dark thoughts, soft heart.</p>
-  </div>
+  <!-- MUSIC (YouTube embed) -->
+  <iframe
+    id="music"
+    src="https://www.youtube.com/embed/01ynkBWYkzY?autoplay=1&mute=1"
+    allow="autoplay">
+  </iframe>
+
 </div>
 
 <script>
-// 🎵 UNMUTE ON CLICK
-document.getElementById("enterBtn").onclick = function() {
-  let player = document.getElementById("ytplayer").contentWindow;
+const enterScreen = document.getElementById("enterScreen");
+const main = document.getElementById("main");
+const enterBtn = document.getElementById("enterBtn");
+const music = document.getElementById("music");
 
-  player.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-  player.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+enterBtn.onclick = () => {
+  enterScreen.style.display = "none";
+  main.style.display = "block";
 
-  this.style.display = "none";
+  // try to unmute after user interaction
+  music.src = music.src.replace("mute=1", "mute=0");
 };
-
-// ✨ FLOATING SYMBOLS
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let symbols = ["✝","✦","☾","⛧"];
-
-let particles = Array.from({length: 40}, () => ({
-  x: Math.random()*canvas.width,
-  y: Math.random()*canvas.height,
-  speed: Math.random()*0.5 + 0.2,
-  symbol: symbols[Math.floor(Math.random()*symbols.length)]
-}));
-
-function draw() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = "rgba(255,0,0,0.7)";
-  ctx.font = "20px serif";
-
-  particles.forEach(p => {
-    ctx.fillText(p.symbol, p.x, p.y);
-    p.y += p.speed;
-    if(p.y > canvas.height) p.y = 0;
-  });
-
-  requestAnimationFrame(draw);
-}
-
-draw();
 </script>
 
 </body>
