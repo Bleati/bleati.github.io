@@ -63,6 +63,18 @@ body {
   pointer-events: auto;
 }
 
+/* CLOCK */
+#clock {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  color: #ff1a1a;
+  font-size: 12px;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  z-index: 3;
+}
+
 /* SIDEBAR */
 .sidebar {
   position: fixed;
@@ -88,8 +100,10 @@ body {
   transition: 0.2s;
 }
 
-.menu a:hover {
-  color: #ff2e2e;
+.menu a:hover,
+.menu a.active {
+  color: #ff1a1a;
+  text-shadow: 0 0 8px rgba(255,0,0,0.4);
   transform: translateX(5px);
 }
 
@@ -137,16 +151,35 @@ body {
 
 .paper a i {
   color: #ff1a1a;
-  transition: 0.2s;
 }
 
 .paper a:hover {
   color: #ff1a1a;
 }
 
-.paper a:hover i {
-  transform: translateX(3px);
-  text-shadow: 0 0 8px rgba(255,0,0,0.5);
+/* NOTES LOG */
+.notes {
+  max-width: 700px;
+  height: 80vh;
+  overflow-y: auto;
+}
+
+.note {
+  background: rgba(0,0,0,0.6);
+  border-left: 2px solid rgba(255,0,0,0.4);
+  padding: 12px;
+  margin-bottom: 12px;
+  color: #ccc;
+}
+
+.note:hover {
+  border-left: 2px solid #ff1a1a;
+}
+
+.date {
+  display: block;
+  color: #ff1a1a;
+  font-size: 11px;
 }
 
 /* FOG */
@@ -156,7 +189,7 @@ body {
   height: 220%;
   top: -60%;
   left: -60%;
-  background: radial-gradient(circle at center, rgba(90,0,0,0.08), rgba(0,0,0,0.96) 75%);
+  background: radial-gradient(circle, rgba(90,0,0,0.08), rgba(0,0,0,0.96) 75%);
   animation: fogMove 40s linear infinite;
   z-index: 0;
 }
@@ -168,9 +201,9 @@ body {
 }
 
 @keyframes fogMove {
-  0% { transform: translate(0,0) scale(1); }
-  50% { transform: translate(80px, -60px) scale(1.15); }
-  100% { transform: translate(0,0) scale(1); }
+  0% { transform: translate(0,0); }
+  50% { transform: translate(80px,-60px); }
+  100% { transform: translate(0,0); }
 }
 
 /* SYMBOLS */
@@ -192,54 +225,66 @@ canvas {
 
 <div id="site">
 
-  <div class="fog"></div>
-  <div class="fog fog2"></div>
+<div id="clock"></div>
 
-  <canvas id="bg"></canvas>
+<div class="fog"></div>
+<div class="fog fog2"></div>
 
-  <div class="sidebar">
-    <div class="logo">bleati</div>
-    <div class="menu">
-      <a href="#" onclick="showPage('homePage')">home</a>
-      <a href="#" onclick="showPage('aboutPage')">about</a>
-      <a href="#" onclick="showPage('linksPage')">links</a>
+<canvas id="bg"></canvas>
+
+<div class="sidebar">
+  <div class="logo">bleati</div>
+  <div class="menu">
+    <a href="#" onclick="showPage(event,'homePage')" class="active">home</a>
+    <a href="#" onclick="showPage(event,'aboutPage')">about</a>
+    <a href="#" onclick="showPage(event,'fursonaPage')">fursona</a>
+    <a href="#" onclick="showPage(event,'linksPage')">links</a>
+    <a href="#" onclick="showPage(event,'extraPage')">extra</a>
+  </div>
+</div>
+
+<div class="main">
+
+<div id="homePage" class="page active">
+  <div class="paper">
+    <h2>♡ welcome ♡</h2>
+    <p>lost little lamb wandering the web. stay a while.</p>
+  </div>
+</div>
+
+<div id="aboutPage" class="page">
+  <div class="paper big">
+    <h2>about</h2>
+    <p>write your bio here</p>
+  </div>
+</div>
+
+<div id="fursonaPage" class="page">
+  <div class="paper big">
+    <h2>fursona</h2>
+    <p>describe your character</p>
+  </div>
+</div>
+
+<div id="linksPage" class="page">
+  <div class="paper big">
+    <h2>links</h2>
+    <p><a href="#"><i class="fa-brands fa-steam"></i> steam</a></p>
+    <p><a href="#"><i class="fa-brands fa-github"></i> github</a></p>
+    <p><a href="#"><i class="fa-brands fa-discord"></i> discord</a></p>
+  </div>
+</div>
+
+<div id="extraPage" class="page">
+  <div class="notes">
+    <div class="note">
+      <span class="date">--:--:--</span>
+      <p>the site is watching.</p>
     </div>
   </div>
+</div>
 
-  <div class="main">
-
-    <div id="homePage" class="page active">
-      <div class="paper">
-        <h2>♡ welcome ♡</h2>
-        <p>lost little lamb wandering the web. stay a while.</p>
-      </div>
-    </div>
-
-    <div id="aboutPage" class="page">
-      <div class="paper big">
-        <h2>about me</h2>
-        <p>
-          write your full bio here...
-
-          make it long, expressive, aesthetic.
-        </p>
-      </div>
-    </div>
-
-    <div id="linksPage" class="page">
-      <div class="paper big">
-        <h2>links</h2>
-
-        <p><a href="#"><i class="fa-brands fa-steam"></i> steam</a></p>
-        <p><a href="#"><i class="fa-brands fa-github"></i> github</a></p>
-        <p><a href="#"><i class="fa-brands fa-discord"></i> discord</a></p>
-        <p><a href="#"><i class="fa-solid fa-link"></i> other</a></p>
-
-      </div>
-    </div>
-
-  </div>
-
+</div>
 </div>
 
 <script>
@@ -250,49 +295,56 @@ const site = document.getElementById("site");
 enterBtn.onclick = () => {
   enterScreen.classList.add("hide");
   site.classList.add("show");
-
-  setTimeout(() => {
-    enterScreen.style.display = "none";
-  }, 600);
-
+  setTimeout(()=>enterScreen.style.display="none",600);
   startSymbols();
 };
 
-function showPage(id) {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+function showPage(e,id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   document.getElementById(id).classList.add("active");
+
+  document.querySelectorAll(".menu a").forEach(a=>a.classList.remove("active"));
+  e.target.classList.add("active");
 }
 
-function startSymbols() {
-  const canvas = document.getElementById("bg");
-  const ctx = canvas.getContext("2d");
+/* CLOCK */
+function updateClock(){
+  const now=new Date();
+  const t=now.toLocaleTimeString();
+  document.getElementById("clock").textContent=t;
 
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  const noteDate=document.querySelector(".note .date");
+  if(noteDate) noteDate.textContent=t;
+}
+setInterval(updateClock,1000);
+updateClock();
 
-  let symbols = ["✝","✦","☾","⛧"];
+/* SYMBOLS */
+function startSymbols(){
+  const canvas=document.getElementById("bg");
+  const ctx=canvas.getContext("2d");
+  canvas.width=innerWidth;
+  canvas.height=innerHeight;
 
-  let particles = Array.from({length: 40}, () => ({
-    x: Math.random()*canvas.width,
-    y: Math.random()*canvas.height,
-    speed: Math.random()*0.4 + 0.15,
-    symbol: symbols[Math.floor(Math.random()*symbols.length)]
+  let symbols=["✝","✦","☾","⛧"];
+  let particles=Array.from({length:40},()=>({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    speed:Math.random()*0.4+0.15,
+    symbol:symbols[Math.floor(Math.random()*symbols.length)]
   }));
 
-  function draw() {
+  function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle = "rgba(255,0,0,0.65)";
-    ctx.font = "20px serif";
-
-    particles.forEach(p => {
-      ctx.fillText(p.symbol, p.x, p.y);
-      p.y += p.speed;
-      if(p.y > canvas.height) p.y = 0;
+    ctx.fillStyle="rgba(255,0,0,0.65)";
+    ctx.font="20px serif";
+    particles.forEach(p=>{
+      ctx.fillText(p.symbol,p.x,p.y);
+      p.y+=p.speed;
+      if(p.y>canvas.height)p.y=0;
     });
-
     requestAnimationFrame(draw);
   }
-
   draw();
 }
 </script>
