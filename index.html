@@ -2,23 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>bleati.com // terminal</title>
+    <title>bleati 🌹</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-        /* GLOBAL STYLE - BLOCKY & RED/BLACK */
+        /* GLOBAL STYLE - RED & BLACK VELVET */
         body {
             margin: 0;
-            background: #000000; 
-            color: #ff0000;
-            font-family: 'Courier New', Courier, monospace; /* Monospace for the blocky look */
+            background: #0a0001; /* Near black with a hint of red */
+            color: #ffcccc; /* Soft pinkish-white for readability */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             overflow-x: hidden;
-            text-transform: uppercase; /* Optional: adds to the terminal vibe */
         }
 
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #ff0000; border: 2px solid #000; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a0002; }
+        ::-webkit-scrollbar-thumb { background: #990011; border-radius: 10px; }
 
         /* ENTER SCREEN */
         #enterScreen {
@@ -30,204 +29,199 @@
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            transition: all 0.5s steps(4); /* Blocky transition */
-            border: 10px double #ff0000;
-            box-sizing: border-box;
+            transition: opacity 1s ease;
         }
 
-        #enterScreen.hide { opacity: 0; visibility: hidden; }
-
-        .lamb-icon {
-            font-size: 100px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 10px #ff0000);
-        }
+        #enterScreen.hide { opacity: 0; pointer-events: none; }
 
         #enterBtn {
-            background: #ff0000;
-            color: #000;
-            border: 4px solid #fff;
-            padding: 20px 40px;
-            font-size: 24px;
+            background: transparent;
+            color: #cc0011;
+            border: 2px solid #cc0011;
+            padding: 15px 40px;
+            font-size: 18px;
             font-weight: bold;
+            border-radius: 50px;
             cursor: pointer;
-            transition: 0.1s;
-            letter-spacing: 4px;
+            transition: 0.4s;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px rgba(204, 0, 17, 0.2);
         }
 
-        #enterBtn:hover { background: #000; color: #ff0000; border-color: #ff0000; }
+        #enterBtn:hover {
+            background: #cc0011;
+            color: #fff;
+            box-shadow: 0 0 40px rgba(204, 0, 17, 0.6);
+            transform: scale(1.05);
+        }
 
         /* SITE STRUCTURE */
-        #site { opacity: 0; display: none; }
-        #site.show { opacity: 1; display: block; }
+        #site { opacity: 0; transition: opacity 1.5s ease; }
+        #site.show { opacity: 1; }
 
-        /* SIDEBARS - HARD EDGES */
+        #clock {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            color: #cc0011;
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 10;
+            background: rgba(0,0,0,0.6);
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid #440005;
+        }
+
+        /* SIDEBAR */
         .sidebar {
             position: fixed;
-            left: 0;
-            width: 260px;
-            height: 100vh;
-            background: #000;
-            border-right: 4px solid #ff0000;
-            padding: 40px 15px;
-            z-index: 5;
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
-        }
-
-        .data-panel-right {
-            position: fixed;
-            right: 0;
             width: 240px;
             height: 100vh;
-            background: #000;
-            border-left: 4px solid #ff0000;
-            padding: 30px 20px;
+            background: #120002;
+            border-right: 2px solid #440005;
+            padding: 40px 25px;
             z-index: 5;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.8);
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-        }
-
-        .data-panel-right h4 {
-            color: #000;
-            background: #ff0000;
-            font-size: 14px;
-            padding: 5px;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .stat-box {
-            background: #000;
-            padding: 12px;
-            font-size: 13px;
-            border: 2px solid #ff0000;
         }
 
         .logo {
-            color: #ff0000;
-            font-size: 32px;
+            color: #cc0011;
+            font-size: 38px;
             font-weight: 900;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             text-align: center;
-            border: 2px solid #ff0000;
-            padding: 10px;
-        }
-
-        .oc-portrait-sidebar {
-            width: 160px;
-            height: 160px;
-            border: 4px solid #ff0000;
-            margin: 0 auto 30px auto;
-            background: #111;
-            overflow: hidden;
+            letter-spacing: -1px;
+            text-shadow: 0 0 15px rgba(204,0,17,0.5);
         }
 
         .menu a {
-            display: flex;
-            align-items: center;
-            color: #ff0000;
+            display: block;
+            color: #664448;
             text-decoration: none;
-            margin: 10px 0;
-            font-size: 16px;
+            margin: 15px 0;
+            font-size: 17px;
             font-weight: bold;
+            transition: 0.3s ease;
+            text-align: center;
+            background: rgba(204,0,17,0.05);
             padding: 12px;
-            border: 2px solid transparent;
-            transition: 0.2s;
-            gap: 12px;
+            border-radius: 20px;
+            border: 1px solid transparent;
         }
 
         .menu a:hover, .menu a.active {
-            color: #000;
-            background: #ff0000;
-            border: 2px solid #fff;
+            color: #fff;
+            background: #990011;
+            border: 1px solid #ff4455;
+            transform: translateY(-2px);
+        }
+
+        .oc-portrait-sidebar {
+            width: 140px;
+            height: 140px;
+            border: 3px solid #cc0011;
+            margin: 0 auto 20px auto;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(204,0,17,0.3);
         }
 
         /* MAIN CONTENT */
         .main {
-            margin-left: 260px;
-            margin-right: 240px;
-            padding: 60px 50px;
+            margin-left: 240px;
+            padding: 60px;
             position: relative;
             z-index: 2;
         }
 
-        .page { display: none; }
-        .page.active { display: block; animation: glitched 0.2s ease; }
+        .page { display: none; max-width: 800px; }
+        .page.active { display: block; animation: fadeUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards; }
 
-        @keyframes glitched {
-            0% { transform: translateX(-5px); opacity: 0; }
-            50% { transform: translateX(5px); }
-            100% { transform: translateX(0); opacity: 1; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* CONTENT BOXES - BLOCKY */
+        /* CARDS - KEEPING THE ROUNDED CUTENESS */
         .paper {
-            background: #000;
-            color: #ff0000;
+            background: #0d0001; /* Very dark red/black paper */
+            color: #ffcccc;
             padding: 40px;
             margin-bottom: 40px;
-            border: 4px solid #ff0000;
-            box-shadow: 10px 10px 0px #440000; /* Darker red depth */
+            border: 2px solid #440005;
+            box-shadow: 10px 10px 0px #660008;
+            border-radius: 30px;
             position: relative;
         }
 
-        .paper .horn-decor {
-            position: absolute;
-            top: -20px;
-            left: 20px;
-            background: #ff0000;
-            color: #000;
-            padding: 5px 15px;
-            font-size: 20px;
-            border: 2px solid #fff;
+        .paper h2 { 
+            font-size: 28px; 
+            margin-top: 0; 
+            color: #ff4455; 
+            border-bottom: 2px dotted #440005;
+            padding-bottom: 10px;
         }
 
-        .paper h2 { 
-            font-size: 24px; 
-            margin-top: 5px; 
-            color: #ff0000; 
-            border-bottom: 4px solid #ff0000;
-            display: inline-block;
-            margin-bottom: 20px;
+        .notebook {
+            background-image: radial-gradient(#220002 2px, transparent 2px);
+            background-size: 25px 25px;
         }
 
         /* IMAGE PANELS */
         .oc-panel {
             background: #000;
-            border: 4px solid #ff0000;
+            border: 2px solid #440005;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
             overflow: hidden;
             margin-bottom: 30px;
+            border-radius: 25px;
         }
-        .oc-panel img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            display: block; 
-            filter: grayscale(1) contrast(1.5); /* Gritty Look */
+
+        .oc-panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: 0.8;
+            transition: 0.5s;
         }
+        
+        .oc-panel:hover img { opacity: 1; transform: scale(1.02); }
 
         .oc-showcase-large { width: 100%; height: 400px; }
 
-        /* PERMANENT FX */
+        /* DECORATIONS */
+        .rose-icon {
+            position: absolute;
+            font-size: 24px;
+            top: -15px;
+            right: 25px;
+            filter: drop-shadow(0 0 5px red);
+        }
+
+        /* FLOATING FX */
         .fog-layer {
             position: fixed;
-            inset: 0;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.15),
-                rgba(0, 0, 0, 0.15) 1px,
-                transparent 1px,
-                transparent 2px
-            ); /* Scanlines effect */
-            z-index: 10;
+            inset: -50%;
+            background: radial-gradient(circle, rgba(153,0,17,0.08) 0%, transparent 70%);
+            animation: moveFog 30s linear infinite;
+            z-index: 0;
             pointer-events: none;
         }
 
-        canvas#symbols { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; opacity: 0.5; }
+        canvas#symbols {
+            position: fixed;
+            top: 0; left: 0;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.4;
+        }
     </style>
 </head>
 
@@ -238,85 +232,57 @@
 </audio>
 
 <div id="enterScreen">
-    <div class="lamb-icon">🐏</div>
-    <button id="enterBtn">[ ACCESS_SYSTEM ]</button>
+    <div style="font-size: 50px; margin-bottom: 20px; filter: drop-shadow(0 0 10px red);">🌹</div>
+    <button id="enterBtn">ENTER THE GARDEN</button>
 </div>
 
 <div id="site">
+    <div id="clock"></div>
     <div class="fog-layer"></div>
     <canvas id="symbols"></canvas>
 
     <div class="sidebar">
-        <div class="logo">BLEATI_OS</div>
+        <div class="logo">bleati 🌹</div>
+        
         <div class="oc-portrait-sidebar oc-panel">
             <img src="placeholder.jpg" alt="Portrait">
         </div>
-        <div class="menu">
-            <a href="#" onclick="showPage(event,'homePage')" class="active"><i class="fa-solid fa-terminal"></i> HOME</a>
-            <a href="#" onclick="showPage(event,'aboutPage')"><i class="fa-solid fa-user"></i> ABOUT</a>
-            <a href="#" onclick="showPage(event,'fursonaPage')"><i class="fa-solid fa-skull"></i> FURSONA</a>
-            <a href="#" onclick="showPage(event,'codingPage')"><i class="fa-solid fa-code"></i> CODING</a>
-            <a href="#" onclick="showPage(event,'gamingPage')"><i class="fa-solid fa-ghost"></i> GAMING</a>
-        </div>
-    </div>
 
-    <div class="data-panel-right">
-        <h4>SYS_STATUS</h4>
-        <div class="stat-box">
-            <strong>CLOCK:</strong> <span id="clock">00:00:00</span>
-        </div>
-        <div class="stat-box">
-            <strong>DATE:</strong> <span id="date-box">--/--/--</span>
-        </div>
-        
-        <h4>DATA_LOG</h4>
-        <div class="stat-box">
-            SITE_VISITOR: [CONNECTED]<br><br>
-            SHEEP_PROTOCOL: [ACTIVE]
+        <div class="menu">
+            <a href="#" onclick="showPage(event,'homePage')" class="active">home</a>
+            <a href="#" onclick="showPage(event,'aboutPage')">about</a>
+            <a href="#" onclick="showPage(event,'fursonaPage')">fursona</a>
         </div>
     </div>
 
     <div class="main">
         <div id="homePage" class="page active">
             <div class="oc-showcase-large oc-panel">
-                <img src="placeholder.jpg" alt="Main Showcase">
+                <img src="placeholder.jpg" alt="Home Showcase">
             </div>
+
             <div class="paper">
-                <div class="horn-decor">STATUS: ONLINE</div>
-                <h2>BAAAAH!? Welcome to my website!</h2>
-                <p>Hewo pardner! This is just the home page use the tabs on the left to navigate to the other pages.</p>
+                <span class="rose-icon">🌹</span>
+                <h2>Hiii~!</h2>
+                <p>Welcome to my dark little corner of the web! I'm a coding sheep who loves velvet vibes and deep red aesthetics. Enjoy your stay! :3</p>
             </div>
         </div>
 
         <div id="aboutPage" class="page">
-            <div class="paper">
-                <div class="horn-decor">USER_BIO</div>
-                <h2>Bio / About me kinda</h2>
-                <p>Hey im a computer programmer sheep furry! I mainly use java/C# but I also like HTML, C++, Lua and SQL for databases and whatnot. Im in a loving relationship with a cute bunny boy named iced. I play guitar (acoustic & eletric) and i love power chords, HUGGEEE sheep nerd, any caprine, ovis/goat/sheep/lamb/ram/ewe I know it. I also like tennis and do some drawing but im not that good.</p>
+            <div class="paper notebook">
+                <span class="rose-icon">🌹</span>
+                <h2>About Me</h2>
+                <p><strong>Code:</strong> C#, C++, Java, SQL (Clean and elegant code!)</p>
+                <p><strong>Me:</strong> AMAB Femboy & Shetland Sheep Furry.</p>
+                <p><strong>Fun:</strong> Guitar, Tennis, CS2, and VRChat hanging.</p>
             </div>
         </div>
 
         <div id="fursonaPage" class="page">
             <div class="paper">
-                <div class="horn-decor">OC_DATA</div>
-                <h2>The Sheepster! (My OC/Fursona)</h2>
-                <p>I have no oc but Im working on making one :(</p>
-            </div>
-        </div>
-
-        <div id="codingPage" class="page">
-            <div class="paper">
-                <div class="horn-decor">PROJECTS</div>
-                <h2>Projects</h2>
-                <p>I have no active projects at the moment but I will soon.</p>
-            </div>
-        </div>
-
-        <div id="gamingPage" class="page">
-            <div class="paper">
-                <div class="horn-decor">EXTRAS</div>
-                <h2>Extras!</h2>
-                <p>Might put social links here soon idk. NOT FINISHED SORRY!!!!</p>
+                <span class="rose-icon">🌹</span>
+                <h2>The Sheepie</h2>
+                <p>Art coming soon! I'm so excited to show off my fluffy self in this new look!</p>
             </div>
         </div>
     </div>
@@ -343,17 +309,15 @@
         e.currentTarget.classList.add("active");
     }
 
-    /* CLOCK & DATE LOGIC */
     setInterval(() => {
-        const now = new Date();
-        document.getElementById("clock").textContent = now.toLocaleTimeString();
-        document.getElementById("date-box").textContent = now.toLocaleDateString();
+        document.getElementById("clock").textContent = new Date().toLocaleTimeString();
     }, 1000);
 
-    /* ETERNAL SYMBOLS */
+    /* RED FLOATING SYMBOLS */
     function startSymbols() {
         const canvas = document.getElementById("symbols");
         const ctx = canvas.getContext("2d");
+
         function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -361,28 +325,25 @@
         window.addEventListener('resize', resize);
         resize();
 
-        const chars = ["0", "1", "X", "!", "#", "羊", "☠", "⛧"];
+        const chars = ["✝", "✦", "☾", "⛧", "☠", "羊"];
         const particles = Array.from({ length: 50 }, () => ({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            speed: Math.random() * 2 + 1, // Faster, jerky movement
-            size: 14,
+            speed: Math.random() * 0.3 + 0.1,
+            size: Math.random() * 15 + 10,
             char: chars[Math.floor(Math.random() * chars.length)]
         }));
 
         function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; // Trails
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => {
-                ctx.fillStyle = "#ff0000";
-                ctx.font = `bold ${p.size}px monospace`;
+                const opacity = 0.15 + Math.abs(Math.sin(Date.now() * 0.001 * p.speed)) * 0.2;
+                ctx.fillStyle = `rgba(204, 0, 17, ${opacity})`;
+                ctx.font = `${p.size}px serif`;
                 ctx.fillText(p.char, p.x, p.y);
+                
                 p.y += p.speed;
-                if (p.y > canvas.height) {
-                    p.y = -20;
-                    p.x = Math.random() * canvas.width;
-                }
+                if (p.y > canvas.height) p.y = -20;
             });
             requestAnimationFrame(draw);
         }
