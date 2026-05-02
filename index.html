@@ -58,7 +58,6 @@
         #site { opacity: 0; transition: opacity 1.5s ease; display: none; }
         #site.show { opacity: 1; display: flex; }
 
-        /* Left Sidebar */
         .sidebar-left {
             position: fixed;
             left: 0;
@@ -73,7 +72,6 @@
             box-sizing: border-box;
         }
 
-        /* Right Sidebar */
         .sidebar-right {
             position: fixed;
             right: 0;
@@ -89,7 +87,6 @@
             box-sizing: border-box;
         }
 
-        /* Main Content Area */
         .main {
             margin-left: 240px;
             margin-right: 220px;
@@ -147,6 +144,7 @@
             border: 1px solid #440005;
             border-radius: 10px;
             font-size: 13px;
+            text-align: center;
         }
 
         .sidebar-right h4 {
@@ -156,6 +154,7 @@
             letter-spacing: 2px;
             border-bottom: 1px solid #440005;
             padding-bottom: 5px;
+            margin-bottom: 10px;
         }
 
         /* --- CARDS & HOVER EFFECTS --- */
@@ -190,7 +189,6 @@
         .oc-panel img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.8; }
         .oc-panel:hover img { opacity: 1; }
 
-        /* --- GRIDS --- */
         .image-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -254,27 +252,23 @@
     </div>
 
     <div class="sidebar-right">
-        <h4>System</h4>
+        <h4><i class="fa-solid fa-clock"></i> Time</h4>
         <div class="stat-box">
-            <strong>Time:</strong> <span id="clock">00:00:00</span>
-        </div>
-        <div class="stat-box">
-            <strong>Status:</strong> <span style="color: #ff4455;">Active</span>
+            <span id="clock" style="font-weight: bold; color: #ff4455; font-size: 16px;">00:00:00</span>
         </div>
 
-        <h4>Heart</h4>
+        <h4><i class="fa-solid fa-calendar-day"></i> Today</h4>
         <div class="stat-box">
-            Cuddling: <strong>Iced</strong> 🐰
+            <span id="date-day" style="display: block; font-size: 15px; margin-bottom: 5px;">Friday</span>
+            <span id="date-full" style="color: #88555a; font-size: 12px;">May 1, 2026</span>
         </div>
-
-        <h4>Mood</h4>
-        <div class="stat-box" style="border-style: dashed;">
-            Feeling very fluffy today!
+        
+        <div style="margin-top: auto; text-align: center; font-size: 10px; color: #440005; letter-spacing: 1px;">
+            BLEATI CORE v2.0
         </div>
     </div>
 
     <div class="main">
-        
         <div id="homePage" class="page active">
             <div class="oc-panel" style="height: 400px;">
                 <img src="placeholder_home.jpg" alt="Welcome Image">
@@ -294,14 +288,14 @@
             <div class="paper">
                 <span class="rose-icon">🌹</span>
                 <h2>The Programmer</h2>
-                <p>I'm a computer programmer sheep furry! I mainly use <strong>Java</strong> and <strong>C#</strong>, but I also enjoy C++, Lua, and SQL. I'm AMAB Femboy and love the Shetland sheep look.</p>
+                <p>I'm a computer programmer sheep furry! I mainly use <strong>Java</strong> and <strong>C#</strong>. I'm AMAB Femboy and love the Shetland sheep look.</p>
             </div>
             <div class="oc-panel" style="height: 250px;">
                 <img src="placeholder_about.jpg" alt="Programming Vibe">
             </div>
             <div class="paper">
                 <h2>Interests</h2>
-                <p>I play both acoustic and electric guitar (power chords are the best!). I also play tennis and love hanging out in VRChat.</p>
+                <p>I play both acoustic and electric guitar. I also play tennis and love hanging out in VRChat.</p>
             </div>
         </div>
 
@@ -314,14 +308,8 @@
             <div class="image-grid">
                 <div class="oc-panel small-panel"><img src="art1.jpg"></div>
                 <div class="oc-panel small-panel"><img src="art2.jpg"></div>
-                <div class="oc-panel small-panel"><img src="art3.jpg"></div>
-                <div class="oc-panel small-panel"><img src="art4.jpg"></div>
-            </div>
-            <div class="oc-panel" style="height: 350px;">
-                <img src="moodboard.jpg" alt="Ref Sheet Placeholder">
             </div>
         </div>
-
     </div>
 </div>
 
@@ -332,7 +320,7 @@
     const music = document.getElementById("bgMusic");
 
     enterBtn.onclick = () => {
-        music.play().catch(e => console.log("Audio play blocked by browser"));
+        music.play().catch(e => console.log("Audio blocked"));
         enterScreen.classList.add("hide");
         site.style.display = "flex";
         setTimeout(() => site.classList.add("show"), 10);
@@ -348,9 +336,15 @@
         window.scrollTo(0,0);
     }
 
-    setInterval(() => {
-        document.getElementById("clock").textContent = new Date().toLocaleTimeString();
-    }, 1000);
+    /* Update Clock and Date */
+    function updateDateTime() {
+        const now = new Date();
+        document.getElementById("clock").textContent = now.toLocaleTimeString();
+        document.getElementById("date-day").textContent = now.toLocaleDateString('en-US', { weekday: 'long' });
+        document.getElementById("date-full").textContent = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
 
     function startSymbols() {
         const canvas = document.getElementById("symbols");
