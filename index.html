@@ -240,16 +240,16 @@
     <canvas id="symbols"></canvas>
 
     <div class="sidebar-left">
-        <div class="logo">= Bleati =</div>
-        <div class="oc-portrait-sidebar">
-            <img https://i.pinimg.com/564x/23/bd/55/23bd553a9ec94dfd337518a4549eeb8a.jpg="placeholder_pfp.jpg" alt="PFP">
-        </div>
-        <div class="menu">
-            <a href="#" onclick="showPage(event,'homePage')" class="active"><i class="fa-solid fa-house"></i> home</a>
-            <a href="#" onclick="showPage(event,'aboutPage')"><i class="fa-solid fa-user"></i> about</a>
-            <a href="#" onclick="showPage(event,'fursonaPage')"><i class="fa-solid fa-paw"></i> fursona</a>
-        </div>
+    <div class="logo">= Bleati =</div>
+    <div class="oc-portrait-sidebar">
+        <img src="https://i.pinimg.com/564x/23/bd/55/23bd553a9ec94dfd337518a4549eeb8a.jpg" alt="PFP">
     </div>
+    <div class="menu">
+        <a href="#" onclick="showPage(event,'homePage')" class="active"><i class="fa-solid fa-house"></i> home</a>
+        <a href="#" onclick="showPage(event,'aboutPage')"><i class="fa-solid fa-user"></i> about</a>
+        <a href="#" onclick="showPage(event,'fursonaPage')"><i class="fa-solid fa-paw"></i> fursona</a>
+    </div>
+</div>
 
     <div class="sidebar-right">
         <h4><i class="fa-solid fa-clock"></i> Time</h4>
@@ -271,7 +271,7 @@
     <div class="main">
         <div id="homePage" class="page active">
             <div class="oc-panel" style="height: 400px;">
-                <img src="placeholder_home.jpg" alt="Welcome Image">
+                <img src="https://i.pinimg.com/564x/23/bd/55/23bd553a9ec94dfd337518a4549eeb8a.jpg" alt="Welcome image">
             </div>
             <div class="paper">
                 <span class="rose-icon">໒꒰ྀི ˶• ༝ •˶ ꒱ྀི১</span>
@@ -279,8 +279,8 @@
                 <p>Baah! Use the sidebar to navigate to other pages this is just a home page!</p>
             </div>
             <div class="image-grid">
-                <div class="oc-panel small-panel"><img src="p1.jpg"></div>
-                <div class="oc-panel small-panel"><img src="p2.jpg"></div>
+                <div class="oc-panel small-panel"><img src="https://i.pinimg.com/564x/23/bd/55/23bd553a9ec94dfd337518a4549eeb8a.jpg"></div>
+                <div class="oc-panel small-panel"><img src="https://i.pinimg.com/564x/23/bd/55/23bd553a9ec94dfd337518a4549eeb8a.jpg"></div>
             </div>
         </div>
 
@@ -291,7 +291,7 @@
                 <p>I'm a computer programmer sheep furry! I mainly use <strong>Java</strong> and <strong>C#</strong> but i also use <strong>C++</strong>, <strong>Lua</strong>, <strong>Python</strong>, <strong>Javascript</strong>, <strong>HTML/CSS</strong>, I'm also a retired 3D modeler using blender. I also play guitar (Acoustic and eletric) I love power chords!! I also LOVE SHEEP & all other caprines! mmm someone buy me some pancakes drowing in syrup >M<</p>
             </div>
             <div class="oc-panel" style="height: 250px;">
-                <img src="placeholder_about.jpg" alt="Programming Vibe">
+                <img src="https://i.pinimg.com/564x/23/bd/55/23bd553a9ec94dfd337518a4549eeb8a.jpg" alt="No image">
             </div>
             <div class="paper">
                 <h2>Gender and Identity</h2>
@@ -306,8 +306,8 @@
                 <p>My oc aint done yet but when get comms i will put em here!</p>
             </div>
             <div class="image-grid">
-                <div class="oc-panel small-panel"><img src="art1.jpg"></div>
-                <div class="oc-panel small-panel"><img src="art2.jpg"></div>
+                <div class="oc-panel small-panel"><img src="https://i.pinimg.com/564x/23/bd/55/23bd553a9ec94dfd337518a4549eeb8a.jpg"></div>
+                <div class="oc-panel small-panel"><img src="https://i.pinimg.com/564x/23/bd/55/23bd553a9ec94dfd337518a4549eeb8a.jpg"></div>
             </div>
         </div>
     </div>
@@ -356,7 +356,7 @@
         window.addEventListener('resize', resize);
         resize();
 
-        const chars = ["✝", "✦", "☾", "⛧", "☠", "羊", "🌹"];
+        const chars = ["✝", "✦", "☾", "⛧"];
         const particles = Array.from({ length: 45 }, () => ({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
