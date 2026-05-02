@@ -1,162 +1,235 @@
-<style>
-    /* GLOBAL STYLE - RED & BLACK OVERHAUL */
-    body {
-        margin: 0;
-        background: #000000; 
-        color: #ff0000; /* Pure Red text */
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        overflow-x: hidden;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bleati.com // terminal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #000; }
-    ::-webkit-scrollbar-thumb { background: #ff0000; border-radius: 0px; }
+    <style>
+        /* GLOBAL STYLE - BLOCKY & RED/BLACK */
+        body {
+            margin: 0;
+            background: #000000; 
+            color: #ff0000;
+            font-family: 'Courier New', Courier, monospace; /* Monospace for the blocky look */
+            overflow-x: hidden;
+            text-transform: uppercase; /* Optional: adds to the terminal vibe */
+        }
 
-    /* ENTER SCREEN */
-    #enterScreen {
-        position: fixed;
-        inset: 0;
-        background: #000000;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-        transition: all 1s ease;
-    }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #ff0000; border: 2px solid #000; }
 
-    #enterScreen.hide { opacity: 0; transform: scale(1.2); pointer-events: none; }
+        /* ENTER SCREEN */
+        #enterScreen {
+            position: fixed;
+            inset: 0;
+            background: #000000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: all 0.5s steps(4); /* Blocky transition */
+            border: 10px double #ff0000;
+            box-sizing: border-box;
+        }
 
-    .lamb-icon {
-        font-size: 80px;
-        margin-bottom: 20px;
-        filter: drop-shadow(0 0 20px #ff0000);
-    }
+        #enterScreen.hide { opacity: 0; visibility: hidden; }
 
-    #enterBtn {
-        background: #000;
-        color: #ff0000;
-        border: 2px solid #ff0000;
-        padding: 15px 50px;
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-        text-transform: uppercase;
-        letter-spacing: 4px;
-        font-family: monospace;
-    }
+        .lamb-icon {
+            font-size: 100px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px #ff0000);
+        }
 
-    #enterBtn:hover { background: #ff0000; color: black; box-shadow: 0 0 30px #ff0000; }
+        #enterBtn {
+            background: #ff0000;
+            color: #000;
+            border: 4px solid #fff;
+            padding: 20px 40px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.1s;
+            letter-spacing: 4px;
+        }
 
-    /* SIDEBAR */
-    .sidebar {
-        position: fixed;
-        left: 0;
-        width: 260px;
-        height: 100vh;
-        background: #000000;
-        border-right: 2px solid #ff0000;
-        padding: 40px 15px;
-        z-index: 5;
-        display: flex;
-        flex-direction: column;
-        box-shadow: 10px 0 30px rgba(255,0,0,0.1);
-    }
+        #enterBtn:hover { background: #000; color: #ff0000; border-color: #ff0000; }
 
-    .data-panel-right {
-        position: fixed;
-        right: 0;
-        width: 220px;
-        height: 100vh;
-        background: #000000;
-        border-left: 2px solid #ff0000;
-        padding: 30px 20px;
-        z-index: 5;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
+        /* SITE STRUCTURE */
+        #site { opacity: 0; display: none; }
+        #site.show { opacity: 1; display: block; }
 
-    .data-panel-right h4 {
-        color: #ff0000;
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 10px;
-        border-bottom: 1px solid #ff0000;
-    }
+        /* SIDEBARS - HARD EDGES */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            width: 260px;
+            height: 100vh;
+            background: #000;
+            border-right: 4px solid #ff0000;
+            padding: 40px 15px;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
 
-    .stat-box {
-        background: rgba(255, 0, 0, 0.05);
-        padding: 12px;
-        border: 1px solid #ff0000;
-        font-size: 13px;
-        color: #ff0000;
-        font-family: monospace;
-    }
+        .data-panel-right {
+            position: fixed;
+            right: 0;
+            width: 240px;
+            height: 100vh;
+            background: #000;
+            border-left: 4px solid #ff0000;
+            padding: 30px 20px;
+            z-index: 5;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-    .logo {
-        color: #ff0000;
-        font-size: 32px;
-        font-weight: 900;
-        margin-bottom: 20px;
-        text-align: center;
-        font-family: monospace;
-        text-shadow: 0 0 10px #ff0000;
-    }
+        .data-panel-right h4 {
+            color: #000;
+            background: #ff0000;
+            font-size: 14px;
+            padding: 5px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
 
-    .menu a {
-        display: flex;
-        align-items: center;
-        color: #800000; /* Darker red for inactive */
-        text-decoration: none;
-        margin: 8px 0;
-        font-size: 16px;
-        font-weight: bold;
-        padding: 12px 15px;
-        transition: 0.3s;
-        gap: 12px;
-        border: 1px solid transparent;
-        font-family: monospace;
-    }
+        .stat-box {
+            background: #000;
+            padding: 12px;
+            font-size: 13px;
+            border: 2px solid #ff0000;
+        }
 
-    .menu a:hover, .menu a.active {
-        color: #fff;
-        background: #ff0000;
-        border: 1px solid #ff0000;
-    }
+        .logo {
+            color: #ff0000;
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 2px solid #ff0000;
+            padding: 10px;
+        }
 
-    /* MAIN CONTENT */
-    .paper {
-        background: #0a0a0a;
-        color: #ff0000;
-        padding: 40px;
-        margin-bottom: 40px;
-        border: 2px solid #ff0000;
-        box-shadow: 8px 8px 0px #4d0000;
-        position: relative;
-        transition: 0.4s;
-    }
+        .oc-portrait-sidebar {
+            width: 160px;
+            height: 160px;
+            border: 4px solid #ff0000;
+            margin: 0 auto 30px auto;
+            background: #111;
+            overflow: hidden;
+        }
 
-    .paper h2 { 
-        font-size: 28px; 
-        color: #ffffff; 
-        text-shadow: 2px 2px #ff0000;
-        text-transform: uppercase;
-    }
+        .menu a {
+            display: flex;
+            align-items: center;
+            color: #ff0000;
+            text-decoration: none;
+            margin: 10px 0;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 12px;
+            border: 2px solid transparent;
+            transition: 0.2s;
+            gap: 12px;
+        }
 
-    .oc-panel {
-        background: #000;
-        border: 2px solid #ff0000;
-        filter: grayscale(1) contrast(1.2) sepia(1) hue-rotate(-50deg); /* Makes images look red/dark */
-    }
+        .menu a:hover, .menu a.active {
+            color: #000;
+            background: #ff0000;
+            border: 2px solid #fff;
+        }
 
-    .fog-layer {
-        background: radial-gradient(circle, rgba(255,0,0,0.05) 0%, transparent 70%);
-    }
-</style>
+        /* MAIN CONTENT */
+        .main {
+            margin-left: 260px;
+            margin-right: 240px;
+            padding: 60px 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page { display: none; }
+        .page.active { display: block; animation: glitched 0.2s ease; }
+
+        @keyframes glitched {
+            0% { transform: translateX(-5px); opacity: 0; }
+            50% { transform: translateX(5px); }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        /* CONTENT BOXES - BLOCKY */
+        .paper {
+            background: #000;
+            color: #ff0000;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 4px solid #ff0000;
+            box-shadow: 10px 10px 0px #440000; /* Darker red depth */
+            position: relative;
+        }
+
+        .paper .horn-decor {
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            background: #ff0000;
+            color: #000;
+            padding: 5px 15px;
+            font-size: 20px;
+            border: 2px solid #fff;
+        }
+
+        .paper h2 { 
+            font-size: 24px; 
+            margin-top: 5px; 
+            color: #ff0000; 
+            border-bottom: 4px solid #ff0000;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        /* IMAGE PANELS */
+        .oc-panel {
+            background: #000;
+            border: 4px solid #ff0000;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        .oc-panel img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+            filter: grayscale(1) contrast(1.5); /* Gritty Look */
+        }
+
+        .oc-showcase-large { width: 100%; height: 400px; }
+
+        /* PERMANENT FX */
+        .fog-layer {
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            ); /* Scanlines effect */
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        canvas#symbols { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; opacity: 0.5; }
+    </style>
+</head>
 
 <body>
 
@@ -166,47 +239,40 @@
 
 <div id="enterScreen">
     <div class="lamb-icon">🐏</div>
-    <div style="color: #ff0000; margin-bottom: 15px; font-family: monospace;">SYSTEM_BOOT: BLEAT_OS</div>
-    <button id="enterBtn">INITIALIZE</button>
+    <button id="enterBtn">[ ACCESS_SYSTEM ]</button>
 </div>
 
 <div id="site">
-    <div style="position: fixed; inset: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%); z-index: 999; pointer-events: none; background-size: 100% 4px;"></div>
-
     <div class="fog-layer"></div>
     <canvas id="symbols"></canvas>
 
     <div class="sidebar">
-        <div class="logo">> BLEATI</div>
+        <div class="logo">BLEATI_OS</div>
         <div class="oc-portrait-sidebar oc-panel">
             <img src="placeholder.jpg" alt="Portrait">
         </div>
         <div class="menu">
-            <a href="#" onclick="showPage(event,'homePage')" class="active"><i class="fa-solid fa-terminal"></i> root/home</a>
-            <a href="#" onclick="showPage(event,'aboutPage')"><i class="fa-solid fa-user"></i> root/about</a>
-            <a href="#" onclick="showPage(event,'fursonaPage')"><i class="fa-solid fa-skull"></i> root/fursona</a>
-            <a href="#" onclick="showPage(event,'codingPage')"><i class="fa-solid fa-code"></i> root/coding</a>
-            <a href="#" onclick="showPage(event,'gamingPage')"><i class="fa-solid fa-ghost"></i> root/extras</a>
-        </div>
-
-        <div style="margin-top: auto; text-align: center; font-size: 12px; color: #ff0000;">
-            <p>SHEEP_PETS: <span id="petCount">0</span></p>
-            <button onclick="petSheep()" style="background: transparent; border: 1px solid #ff0000; color: #ff0000; cursor: pointer; padding: 5px 10px; font-family: monospace;">PET_UNIT</button>
+            <a href="#" onclick="showPage(event,'homePage')" class="active"><i class="fa-solid fa-terminal"></i> HOME</a>
+            <a href="#" onclick="showPage(event,'aboutPage')"><i class="fa-solid fa-user"></i> ABOUT</a>
+            <a href="#" onclick="showPage(event,'fursonaPage')"><i class="fa-solid fa-skull"></i> FURSONA</a>
+            <a href="#" onclick="showPage(event,'codingPage')"><i class="fa-solid fa-code"></i> CODING</a>
+            <a href="#" onclick="showPage(event,'gamingPage')"><i class="fa-solid fa-ghost"></i> GAMING</a>
         </div>
     </div>
 
     <div class="data-panel-right">
-        <h4>System Info</h4>
-        <div class="stat-box">TIME: <span id="clock">00:00:00</span></div>
-        <div class="stat-box">DAY: <span id="customDay">ERROR</span></div>
-        
-        <h4>Status</h4>
+        <h4>SYS_STATUS</h4>
         <div class="stat-box">
-            <marquee scrollamount="2">> THE SHEEP IS ONLINE...</marquee>
+            <strong>CLOCK:</strong> <span id="clock">00:00:00</span>
         </div>
-
-        <div class="stat-box" style="border-style: dashed; opacity: 0.7;">
-            Sheepkind thanks thy.
+        <div class="stat-box">
+            <strong>DATE:</strong> <span id="date-box">--/--/--</span>
+        </div>
+        
+        <h4>DATA_LOG</h4>
+        <div class="stat-box">
+            SITE_VISITOR: [CONNECTED]<br><br>
+            SHEEP_PROTOCOL: [ACTIVE]
         </div>
     </div>
 
@@ -216,7 +282,7 @@
                 <img src="placeholder.jpg" alt="Main Showcase">
             </div>
             <div class="paper">
-                <div class="horn-decor">૮꒰ ˶• ༝ •˶꒱ა</div>
+                <div class="horn-decor">STATUS: ONLINE</div>
                 <h2>BAAAAH!? Welcome to my website!</h2>
                 <p>Hewo pardner! This is just the home page use the tabs on the left to navigate to the other pages.</p>
             </div>
@@ -224,7 +290,7 @@
 
         <div id="aboutPage" class="page">
             <div class="paper">
-                <div class="horn-decor">૮꒰ ˶• ༝ •˶꒱ა</div>
+                <div class="horn-decor">USER_BIO</div>
                 <h2>Bio / About me kinda</h2>
                 <p>Hey im a computer programmer sheep furry! I mainly use java/C# but I also like HTML, C++, Lua and SQL for databases and whatnot. Im in a loving relationship with a cute bunny boy named iced. I play guitar (acoustic & eletric) and i love power chords, HUGGEEE sheep nerd, any caprine, ovis/goat/sheep/lamb/ram/ewe I know it. I also like tennis and do some drawing but im not that good.</p>
             </div>
@@ -232,7 +298,7 @@
 
         <div id="fursonaPage" class="page">
             <div class="paper">
-                <div class="horn-decor">૮꒰ ˶• ༝ •˶꒱ა</div>
+                <div class="horn-decor">OC_DATA</div>
                 <h2>The Sheepster! (My OC/Fursona)</h2>
                 <p>I have no oc but Im working on making one :(</p>
             </div>
@@ -240,7 +306,7 @@
 
         <div id="codingPage" class="page">
             <div class="paper">
-                <div class="horn-decor">૮꒰ ˶• ༝ •˶꒱ა</div>
+                <div class="horn-decor">PROJECTS</div>
                 <h2>Projects</h2>
                 <p>I have no active projects at the moment but I will soon.</p>
             </div>
@@ -248,7 +314,7 @@
 
         <div id="gamingPage" class="page">
             <div class="paper">
-                <div class="horn-decor">૮꒰ ˶• ༝ •˶꒱ა</div>
+                <div class="horn-decor">EXTRAS</div>
                 <h2>Extras!</h2>
                 <p>Might put social links here soon idk. NOT FINISHED SORRY!!!!</p>
             </div>
@@ -257,7 +323,6 @@
 </div>
 
 <script>
-    /* Logic remains same, but updated strings for the red/black theme */
     const enterBtn = document.getElementById("enterBtn");
     const enterScreen = document.getElementById("enterScreen");
     const site = document.getElementById("site");
@@ -278,19 +343,14 @@
         e.currentTarget.classList.add("active");
     }
 
-    let pets = 0;
-    function petSheep() {
-        pets++;
-        document.getElementById("petCount").textContent = pets;
-    }
-
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    /* CLOCK & DATE LOGIC */
     setInterval(() => {
         const now = new Date();
         document.getElementById("clock").textContent = now.toLocaleTimeString();
-        document.getElementById("customDay").textContent = days[now.getDay()].toUpperCase();
+        document.getElementById("date-box").textContent = now.toLocaleDateString();
     }, 1000);
 
+    /* ETERNAL SYMBOLS */
     function startSymbols() {
         const canvas = document.getElementById("symbols");
         const ctx = canvas.getContext("2d");
@@ -301,26 +361,34 @@
         window.addEventListener('resize', resize);
         resize();
 
-        const chars = ["0", "1", "☠", "⛧", "羊", "!", "#", "x"];
-        const particles = Array.from({ length: 40 }, () => ({
+        const chars = ["0", "1", "X", "!", "#", "羊", "☠", "⛧"];
+        const particles = Array.from({ length: 50 }, () => ({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            speed: Math.random() * 0.5 + 0.2,
-            size: Math.random() * 14 + 10,
+            speed: Math.random() * 2 + 1, // Faster, jerky movement
+            size: 14,
             char: chars[Math.floor(Math.random() * chars.length)]
         }));
 
         function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; // Trails
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
             particles.forEach(p => {
-                ctx.fillStyle = `rgba(255, 0, 0, 0.15)`;
-                ctx.font = `${p.size}px monospace`;
+                ctx.fillStyle = "#ff0000";
+                ctx.font = `bold ${p.size}px monospace`;
                 ctx.fillText(p.char, p.x, p.y);
                 p.y += p.speed;
-                if (p.y > canvas.height) p.y = -20;
+                if (p.y > canvas.height) {
+                    p.y = -20;
+                    p.x = Math.random() * canvas.width;
+                }
             });
             requestAnimationFrame(draw);
         }
         draw();
     }
 </script>
+
+</body>
+</html>
